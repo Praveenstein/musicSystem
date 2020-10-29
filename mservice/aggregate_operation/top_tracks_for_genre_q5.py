@@ -18,6 +18,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import func, desc
+from tabulate import tabulate
 
 # User Imports
 import mservice.database_model as models
@@ -77,28 +78,19 @@ def get_top_tracks_for_genre(session, number_of_tracks):
                           genre_ranked_table.c.number_of_purchases)
 
     # To get the top 2 tracks for all genre, the query is filtered for track_rank less than 3
-    results = query.filter(genre_ranked_table.c.track_rank < 3)
+    results = query.filter(genre_ranked_table.c.track_rank < number_of_tracks + 1).all()
 
-    # Setting first variable as true, which could be used inside the for loop to print some line the first time
-    # The loop is being run
-    first = True
-
-    for result in results:
-
-        if first:
-            # If it is the first time inside the loop, then some new lines and special characters are printed
-            # And first is set to false
-            print("\n\n")
-            print("==" * 50)
-            print("\n\n")
-            first = False
-            print("Track Id \t\tTrack Name\t\tGenre Id\t\t\tGenre Name\t\tNumber of Purchases\n")
-
-        print(f"{result.track_id},\t\t {result.track_name},\t\t {result.genre_id},\t\t {result.genre_name},"
-              f"\t\t {result.number_of_purchases}")
-        print("\n")
+    LOGGER.info("\n\nThe Top %s Tracks For all Genre, Based On Number Of Purchases", number_of_tracks)
 
     print("\n\n")
-    print("==" * 50)
+    print("===" * 50)
+    print("\n\n")
+
+    print(tabulate(results, headers=["Track ID", "Track Name", "Genre ID", "Genre Name", "Number Of Purchases"],
+                   tablefmt="grid"))
+
+    print("\n\n")
+    print("===" * 50)
+    print("\n\n")
 
     session.close()

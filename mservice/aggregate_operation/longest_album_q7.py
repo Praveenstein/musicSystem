@@ -17,6 +17,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import desc, func
+from tabulate import tabulate
 
 # User Imports
 import mservice.database_model as models
@@ -59,28 +60,18 @@ def get_longest_album(session, number_of_albums):
     # Sorting by milliseconds and track id
     query = query.order_by(desc("total_playtime"), models.TracksTable.album_id)
 
-    results = query.limit(number_of_albums)
+    results = query.limit(number_of_albums).all()
 
-    # Setting first variable as true, which could be used inside the for loop to print some line the first time
-    # The loop is being run
-    first = True
-
-    for result in results:
-
-        if first:
-
-            # If it is the first time inside the loop, then some new lines and special characters are printed
-            # And first is set to false
-            print("\n\n")
-            print("==" * 50)
-            print("\n\n")
-            first = False
-            print("Album ID \t\tTitle\t\tTotal PlayTime\n")
-
-        print(f"{result.album_id},\t\t {result.title},\t\t {result.total_playtime}")
-        print("\n")
+    LOGGER.info("\n\nThe %s Longest Albums Based On Playtime Of Its Tracks", number_of_albums)
 
     print("\n\n")
-    print("==" * 50)
+    print("===" * 50)
+    print("\n\n")
+
+    print(tabulate(results, headers=["Album ID", "Album Title", "Total PlayTime (Milli Seconds)"], tablefmt="grid"))
+
+    print("\n\n")
+    print("===" * 50)
+    print("\n\n")
 
     session.close()

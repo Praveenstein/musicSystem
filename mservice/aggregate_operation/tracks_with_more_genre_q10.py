@@ -18,6 +18,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import func, distinct
+from tabulate import tabulate
 
 # User Imports
 import mservice.database_model as models
@@ -65,28 +66,18 @@ def get_tracks_with_more_genre(session, number_of_tracks):
     # Sorting by Tracks Name
     query = query.order_by(models.TracksTable.name)
 
-    results = query.limit(number_of_tracks)
+    results = query.limit(number_of_tracks).all()
 
-    # Setting first variable as true, which could be used inside the for loop to print some line the first time
-    # The loop is being run
-    first = True
-
-    for result in results:
-
-        if first:
-
-            # If it is the first time inside the loop, then some new lines and special characters are printed
-            # And first is set to false
-            print("\n\n")
-            print("==" * 50)
-            print("\n\n")
-            first = False
-            print("Track Name \t\tGenre Name\n")
-
-        print(f"{result.track_name},\t\t {result.genre_name}")
-        print("\n")
+    LOGGER.info("\n\n%s Tracks, That Are Part Of More Than One Genre", number_of_tracks)
 
     print("\n\n")
-    print("==" * 50)
+    print("===" * 50)
+    print("\n\n")
+
+    print(tabulate(results, headers=["Track Name", "Genre Name"], tablefmt="grid"))
+
+    print("\n\n")
+    print("===" * 50)
+    print("\n\n")
 
     session.close()

@@ -17,6 +17,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import func, desc
+from tabulate import tabulate
 
 # User Imports
 import mservice.database_model as models
@@ -46,7 +47,7 @@ def get_top_artist_tracks(session, number_of_artist):
 
     LOGGER.info("Performing Read Operation")
 
-    # Selecting the Album id, Album Title, and count of track id
+    # Selecting the Artist id, Artist Name, and count of track id
     query = session.query(models.AlbumTable.artist_id, models.ArtistTable.name,
                           func.count(models.TracksTable.track_id).label("number_of_tracks"))
 
@@ -60,28 +61,18 @@ def get_top_artist_tracks(session, number_of_artist):
     # Sorting by number_of_tracks and artist id
     query = query.order_by(desc("number_of_tracks"), models.AlbumTable.artist_id)
 
-    results = query.limit(number_of_artist)
+    results = query.limit(number_of_artist).all()
 
-    # Setting first variable as true, which could be used inside the for loop to print some line the first time
-    # The loop is being run
-    first = True
-
-    for result in results:
-
-        if first:
-
-            # If it is the first time inside the loop, then some new lines and special characters are printed
-            # And first is set to false
-            print("\n\n")
-            print("==" * 50)
-            print("\n\n")
-            first = False
-            print("Artist ID \t\tName\t\tnumber of tracks\n")
-
-        print(f"{result.artist_id},\t\t {result.name},\t\t {result.number_of_tracks}")
-        print("\n")
+    LOGGER.info("\n\nThe Top %s Artist based on number of tracks are", number_of_artist)
 
     print("\n\n")
-    print("==" * 50)
+    print("===" * 50)
+    print("\n\n")
+
+    print(tabulate(results, headers=["Artist ID", "Artist Name", "Number Of Tracks"], tablefmt="grid"))
+
+    print("\n\n")
+    print("===" * 50)
+    print("\n\n")
 
     session.close()

@@ -19,6 +19,8 @@ import sqlalchemy.orm
 from sqlalchemy import func, desc, distinct
 
 # User Imports
+from tabulate import tabulate
+
 import mservice.database_model as models
 
 LOGGER = logging.getLogger(__name__)
@@ -60,28 +62,18 @@ def get_top_album_purchases(session, number_of_albums):
     # Sorting by number_of_purchases
     query = query.order_by(desc("number_of_purchases"), models.TracksTable.album_id)
 
-    results = query.limit(number_of_albums)
+    results = query.limit(number_of_albums).all()
 
-    # Setting first variable as true, which could be used inside the for loop to print some line the first time
-    # The loop is being run
-    first = True
-
-    for result in results:
-
-        if first:
-
-            # If it is the first time inside the loop, then some new lines and special characters are printed
-            # And first is set to false
-            print("\n\n")
-            print("==" * 50)
-            print("\n\n")
-            first = False
-            print("Album ID \t\tTitle\t\tNumber of Purchases\n")
-
-        print(f"{result.album_id},\t\t {result.title},\t\t {result.number_of_purchases}")
-        print("\n")
+    LOGGER.info("\n\nThe Top %s Albums based on Total Number of Purchases", number_of_albums)
 
     print("\n\n")
-    print("==" * 50)
+    print("===" * 50)
+    print("\n\n")
+
+    print(tabulate(results, headers=["Album ID", " Album Title", "Number Of Purchases"], tablefmt="grid"))
+
+    print("\n\n")
+    print("===" * 50)
+    print("\n\n")
 
     session.close()

@@ -18,6 +18,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import desc, func, extract
+from tabulate import tabulate
 
 # User Imports
 import mservice.database_model as models
@@ -66,28 +67,18 @@ def get_top_employee_sales(session, number_of_employee):
     # Sorting by total_sales and employee id
     query = query.order_by(desc("total_sales"), models.CustomerTable.support_rep_id)
 
-    results = query.limit(number_of_employee)
+    results = query.limit(number_of_employee).all()
 
-    # Setting first variable as true, which could be used inside the for loop to print some line the first time
-    # The loop is being run
-    first = True
-
-    for result in results:
-
-        if first:
-
-            # If it is the first time inside the loop, then some new lines and special characters are printed
-            # And first is set to false
-            print("\n\n")
-            print("==" * 50)
-            print("\n\n")
-            first = False
-            print("Employee ID \t\tName\t\tTotal Sales\n")
-
-        print(f"{result.employee_id},\t\t {result.name},\t\t {result.total_sales}")
-        print("\n")
+    LOGGER.info("\n\nThe Top %s Employee with Most Sales in Year: 2012 and Month: 08", number_of_employee)
 
     print("\n\n")
-    print("==" * 50)
+    print("===" * 50)
+    print("\n\n")
+
+    print(tabulate(results, headers=["Employee ID", "Employee Name", "Total Sales"], tablefmt="grid"))
+
+    print("\n\n")
+    print("===" * 50)
+    print("\n\n")
 
     session.close()

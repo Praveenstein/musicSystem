@@ -21,6 +21,8 @@ from sqlalchemy import desc, func, extract
 from sqlalchemy.orm import aliased
 
 # User Imports
+from tabulate import tabulate
+
 import mservice.database_model as models
 
 LOGGER = logging.getLogger(__name__)
@@ -73,27 +75,18 @@ def get_top_manager_revenue(session, number_of_manager):
     # Sorting By total revenue
     query = query.order_by(desc("total_revenue"))
 
-    results = query.limit(number_of_manager)
+    results = query.limit(number_of_manager).all()
 
-    # Setting first variable as true, which could be used inside the for loop to print some line the first time
-    # The loop is being run
-    first = True
-
-    for result in results:
-
-        if first:
-            # If it is the first time inside the loop, then some new lines and special characters are printed
-            # And first is set to false
-            print("\n\n")
-            print("==" * 50)
-            print("\n\n")
-            first = False
-            print("Manager Id \t\tManager Name\t\tTotal Revenue\n")
-
-        print(f"{result.manager_id},\t\t {result.manager_name},\t\t {result.total_revenue}")
-        print("\n")
+    LOGGER.info("\n\nThe Top %s Manager with Most Sales in Year: 2012 and Month: 08", number_of_manager)
 
     print("\n\n")
-    print("==" * 50)
+    print("===" * 50)
+    print("\n\n")
+
+    print(tabulate(results, headers=["Manager ID", "Manager Name", "Total Revenue"], tablefmt="grid"))
+
+    print("\n\n")
+    print("===" * 50)
+    print("\n\n")
 
     session.close()

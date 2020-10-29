@@ -17,6 +17,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import func, desc
+from tabulate import tabulate
 
 # User Imports
 import mservice.database_model as models
@@ -60,28 +61,18 @@ def get_top_customers(session, number_of_customers):
     # Sorting by total amount and customer Id
     query = query.order_by(desc("total_amount"), models.InvoiceTable.customer_id)
 
-    results = query.limit(number_of_customers)
+    results = query.limit(number_of_customers).all()
 
-    # Setting first variable as true, which could be used inside the for loop to print some line the first time
-    # The loop is being run
-    first = True
-
-    for result in results:
-
-        if first:
-
-            # If it is the first time inside the loop, then some new lines and special characters are printed
-            # And first is set to false
-            print("\n\n")
-            print("==" * 50)
-            print("\n\n")
-            first = False
-            print("Customer ID \t\tName\t\tTotal Amount\n")
-
-        print(f"{result.customer_id},\t\t {result.name},\t\t {result.total_amount}")
-        print("\n")
+    LOGGER.info("\n\nThe Top %s Customers based on Total Amount of Purchases", number_of_customers)
 
     print("\n\n")
-    print("==" * 50)
+    print("===" * 50)
+    print("\n\n")
+
+    print(tabulate(results, headers=["Customer ID", " Customer Name", "Total Amount"], tablefmt="grid"))
+
+    print("\n\n")
+    print("===" * 50)
+    print("\n\n")
 
     session.close()
