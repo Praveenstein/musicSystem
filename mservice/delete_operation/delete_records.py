@@ -15,6 +15,7 @@ This script contains the following function
 import logging
 
 # External Imports
+import sqlalchemy
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 # User Imports
@@ -37,16 +38,17 @@ def perform_delete(session):
     LOGGER.info("Performing Delete Operation")
     try:
 
-        new_genre = session.query(models.GenreTable).filter(models.GenreTable.genre_id == 33).one()
+        if not issubclass(type(session), sqlalchemy.orm.session.Session):
+            raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
+
+        new_genre = session.query(models.GenreTable).filter(models.GenreTable.genre_id == 26).one()
         session.delete(new_genre)
         session.commit()
         LOGGER.info("Deleted New Media")
     except NoResultFound as err:
         LOGGER.error("No Results: %s", err)
-        session.rollback()
     except MultipleResultsFound as err:
         LOGGER.error("Multiple Results: %s", err)
-        session.rollback()
     except Exception as err:
         LOGGER.error("Error: %s", err)
         session.rollback()

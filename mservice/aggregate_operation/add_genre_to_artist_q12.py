@@ -34,38 +34,40 @@ def add_genre_to_artist(engine, number_of_artist):
     :return: Nothing
     :rtype: None
     """
+    try:
+        if not issubclass(type(engine), sqlalchemy.engine.base.Engine):
+            raise AttributeError("Engine not passed correctly, should be of type 'sqlalchemy.engine.base.Engine' ")
 
-    if not issubclass(type(engine), sqlalchemy.engine.base.Engine):
-        raise AttributeError("Engine not passed correctly, should be of type 'sqlalchemy.engine.base.Engine' ")
+        if not issubclass(type(number_of_artist), int) or number_of_artist < 1:
+            raise AttributeError("number of artist should be integer and greater than 0")
 
-    if not issubclass(type(number_of_artist), int) or number_of_artist < 1:
-        raise AttributeError("number of artist should be integer and greater than 0")
+        LOGGER.info("Performing Read Operation")
 
-    LOGGER.info("Performing Read Operation")
+        sql_stmt = f"""
+                        SELECT DISTINCT 
+                            art.Name AS artist ,
+                            g.Name AS genre	   
+                        FROM track t
+                        INNER JOIN genre g
+                            ON t.GenreId = g.GenreId
+                        INNER JOIN album a
+                            ON t.AlbumId = a.AlbumId
+                        INNER JOIN artist art
+                            ON a.ArtistId = art.ArtistId
+                        -- WHERE a.ArtistId = 6 
+                        ORDER BY a.ArtistId
+                        LIMIT {number_of_artist}
+                    """
 
-    sql_stmt = f"""
-                    SELECT DISTINCT 
-                        art.Name AS artist ,
-                        g.Name AS genre	   
-                    FROM track t
-                    INNER JOIN genre g
-                        ON t.GenreId = g.GenreId
-                    INNER JOIN album a
-                        ON t.AlbumId = a.AlbumId
-                    INNER JOIN artist art
-                        ON a.ArtistId = art.ArtistId
-                    -- WHERE a.ArtistId = 6 
-                    ORDER BY a.ArtistId
-                    LIMIT {number_of_artist}
-                """
+        with engine.connect() as connection:
+            artists_df = pd.read_sql(sql_stmt, connection)
 
-    with engine.connect() as connection:
-        artists_df = pd.read_sql(sql_stmt, connection)
+        print("\n\n")
+        print("==" * 50)
 
-    print("\n\n")
-    print("==" * 50)
+        print(artists_df)
 
-    print(artists_df)
-
-    print("\n\n")
-    print("==" * 50)
+        print("\n\n")
+        print("==" * 50)
+    except AttributeError as err:
+        LOGGER.error(err)

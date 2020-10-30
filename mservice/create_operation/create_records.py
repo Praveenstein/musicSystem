@@ -161,36 +161,48 @@ def perform_create(session_factory):
     :return: Nothing
     :rtype: None
     """
+    try:
 
-    if not issubclass(type(session_factory), sqlalchemy.orm.session.sessionmaker):
-        raise AttributeError("Session Maker not passed properly, correct type 'sqlalchemy.orm.session.sessionmaker' ")
+        if not issubclass(type(session_factory), sqlalchemy.orm.session.sessionmaker):
+            raise AttributeError("Session Maker not passed properly, correct type "
+                                 "'sqlalchemy.orm.session.sessionmaker' ")
 
-    session = session_factory()
-    new_genre_id = create_new_genre(session)
+        session = session_factory()
+        new_genre_id = create_new_genre(session)
 
-    if not issubclass(type(new_genre_id), int):
-        raise AttributeError("Returned Genre Id is not of type Int")
+        if not issubclass(type(new_genre_id), int):
+            raise AttributeError("Returned Genre Id is not of type Int")
 
-    session = session_factory()
-    new_track_id = create_new_track(session, new_genre_id)
+        session = session_factory()
+        new_track_id = create_new_track(session, new_genre_id)
 
-    if not issubclass(type(new_track_id), int):
-        raise AttributeError("Returned Track Id is not of type Int")
+        if not issubclass(type(new_track_id), int):
+            raise AttributeError("Returned Track Id is not of type Int")
 
-    session = session_factory()
-    new_invoice_id = create_new_invoice(session)
+        session = session_factory()
+        new_invoice_id = create_new_invoice(session)
 
-    if not issubclass(type(new_invoice_id), int):
-        raise AttributeError("Returned Track Id is not of type Int")
+        if not issubclass(type(new_invoice_id), int):
+            raise AttributeError("Returned Track Id is not of type Int")
 
-    session = session_factory()
-    new_invoiceline_1_id, new_invoiceline_2_id = create_new_invoiceline(session, new_track_id, new_invoice_id)
+        session = session_factory()
+        new_invoiceline_1_id, new_invoiceline_2_id = create_new_invoiceline(session, new_track_id, new_invoice_id)
 
-    if not issubclass(type(new_invoiceline_1_id), int) or not issubclass(type(new_invoiceline_2_id), int):
-        raise AttributeError("Returned invoiceline Id is not of type Int")
+        if not issubclass(type(new_invoiceline_1_id), int) or not issubclass(type(new_invoiceline_2_id), int):
+            raise AttributeError("Returned invoiceline Id is not of type Int")
 
-    LOGGER.info("The ID of new Genre: %s", new_genre_id)
-    LOGGER.info("The ID of new Track: %s", new_track_id)
-    LOGGER.info("The ID of new Invoice: %s", new_invoice_id)
-    LOGGER.info("The ID of new Invoiceline_1_id: %s", new_invoiceline_1_id)
-    LOGGER.info("The ID of new Invoiceline_2_id: %s", new_invoiceline_2_id)
+        print("\n\n")
+        print("====" * 50)
+        print("\n\n")
+
+        LOGGER.info("The ID of new Genre: %s", new_genre_id)
+        LOGGER.info("The ID of new Track: %s", new_track_id)
+        LOGGER.info("The ID of new Invoice: %s", new_invoice_id)
+        LOGGER.info("The ID of new Invoiceline_1_id: %s", new_invoiceline_1_id)
+        LOGGER.info("The ID of new Invoiceline_2_id: %s", new_invoiceline_2_id)
+
+        print("\n\n")
+        print("====" * 50)
+        print("\n\n")
+    except AttributeError as err:
+        LOGGER.error(err)

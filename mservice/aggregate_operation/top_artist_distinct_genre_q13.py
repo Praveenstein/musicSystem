@@ -18,6 +18,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import desc, func, distinct
+from sqlalchemy.orm.exc import NoResultFound
 from tabulate import tabulate
 
 # User Imports
@@ -39,41 +40,48 @@ def get_top_artist_genre(session, number_of_artist):
     :return: Nothing
     :rtype: None
     """
+    try:
+        if not issubclass(type(session), sqlalchemy.orm.session.Session):
+            raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
 
-    if not issubclass(type(session), sqlalchemy.orm.session.Session):
-        raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
+        if not issubclass(type(number_of_artist), int) or number_of_artist < 1:
+            raise AttributeError("number of tracks should be integer and greater than 0")
 
-    if not issubclass(type(number_of_artist), int) or number_of_artist < 1:
-        raise AttributeError("number of tracks should be integer and greater than 0")
+        LOGGER.info("Performing Read Operation")
 
-    LOGGER.info("Performing Read Operation")
+        # Selecting the Artist Id, Artist Name, and Count of Distinct Genre IDs
+        query = session.query(models.AlbumTable.artist_id, models.ArtistTable.name,
+                              func.count(distinct(models.TracksTable.genre_id)).label("number_of_genre"))
 
-    # Selecting the Artist Id, Artist Name, and Count of Distinct Genre IDs
-    query = session.query(models.AlbumTable.artist_id, models.ArtistTable.name,
-                          func.count(distinct(models.TracksTable.genre_id)).label("number_of_genre"))
+        # Joining tracks table, album table and artist table
+        query = query.join(models.AlbumTable, models.TracksTable.album_id == models.AlbumTable.album_id)
+        query = query.join(models.ArtistTable, models.AlbumTable.artist_id == models.ArtistTable.artist_id)
 
-    # Joining tracks table, album table and artist table
-    query = query.join(models.AlbumTable, models.TracksTable.album_id == models.AlbumTable.album_id)
-    query = query.join(models.ArtistTable, models.AlbumTable.artist_id == models.ArtistTable.artist_id)
+        # Grouping by Artist Id
+        query = query.group_by(models.AlbumTable.artist_id)
 
-    # Grouping by Artist Id
-    query = query.group_by(models.AlbumTable.artist_id)
+        # Sorting by number_of_genre and artist id
+        query = query.order_by(desc("number_of_genre"), models.AlbumTable.artist_id)
 
-    # Sorting by number_of_genre and artist id
-    query = query.order_by(desc("number_of_genre"), models.AlbumTable.artist_id)
+        results = query.limit(number_of_artist).all()
 
-    results = query.limit(number_of_artist).all()
+        if not results:
+            raise NoResultFound("No Records Found")
 
-    LOGGER.info("\n\nThe top %s Artist, Based On Number Of Distinct Genre", number_of_artist)
+        LOGGER.info("\n\nThe top %s Artist, Based On Number Of Distinct Genre", number_of_artist)
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
 
-    print(tabulate(results, headers=["Artist ID", "Artist Name", "Number Of Genre"], tablefmt="grid"))
+        print(tabulate(results, headers=["Artist ID", "Artist Name", "Number Of Genre"], tablefmt="grid"))
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
-
-    session.close()
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
+    except AttributeError as err:
+        LOGGER.error(err)
+    except NoResultFound as err:
+        LOGGER.error(err)
+    finally:
+        session.close()

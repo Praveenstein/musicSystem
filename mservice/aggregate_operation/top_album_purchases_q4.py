@@ -19,6 +19,7 @@ import sqlalchemy.orm
 from sqlalchemy import func, desc, distinct
 
 # User Imports
+from sqlalchemy.orm.exc import NoResultFound
 from tabulate import tabulate
 
 import mservice.database_model as models
@@ -39,41 +40,48 @@ def get_top_album_purchases(session, number_of_albums):
     :return: Nothing
     :rtype: None
     """
+    try:
+        if not issubclass(type(session), sqlalchemy.orm.session.Session):
+            raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
 
-    if not issubclass(type(session), sqlalchemy.orm.session.Session):
-        raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
+        if not issubclass(type(number_of_albums), int) or number_of_albums < 1:
+            raise AttributeError("number of albums should be integer and greater than 0")
 
-    if not issubclass(type(number_of_albums), int) or number_of_albums < 1:
-        raise AttributeError("number of albums should be integer and greater than 0")
+        LOGGER.info("Performing Read Operation")
 
-    LOGGER.info("Performing Read Operation")
+        # Selecting the Album id, Album Title, and count of distinct invoice IDs
+        query = session.query(models.TracksTable.album_id, models.AlbumTable.title,
+                              func.count(distinct(models.InvoiceLineTable.invoice_id)).label("number_of_purchases"))
 
-    # Selecting the Album id, Album Title, and count of distinct invoice IDs
-    query = session.query(models.TracksTable.album_id, models.AlbumTable.title,
-                          func.count(distinct(models.InvoiceLineTable.invoice_id)).label("number_of_purchases"))
+        # Joining tracks table and invoiceline table with album table
+        query = query.join(models.TracksTable, models.InvoiceLineTable.track_id == models.TracksTable.track_id)
+        query = query.join(models.AlbumTable, models.TracksTable.album_id == models.AlbumTable.album_id)
 
-    # Joining tracks table and invoiceline table with album table
-    query = query.join(models.TracksTable, models.InvoiceLineTable.track_id == models.TracksTable.track_id)
-    query = query.join(models.AlbumTable, models.TracksTable.album_id == models.AlbumTable.album_id)
+        # Grouping by Album Id
+        query = query.group_by(models.TracksTable.album_id)
 
-    # Grouping by Album Id
-    query = query.group_by(models.TracksTable.album_id)
+        # Sorting by number_of_purchases
+        query = query.order_by(desc("number_of_purchases"), models.TracksTable.album_id)
 
-    # Sorting by number_of_purchases
-    query = query.order_by(desc("number_of_purchases"), models.TracksTable.album_id)
+        results = query.limit(number_of_albums).all()
 
-    results = query.limit(number_of_albums).all()
+        if not results:
+            raise NoResultFound("No Records Found")
 
-    LOGGER.info("\n\nThe Top %s Albums based on Total Number of Purchases", number_of_albums)
+        LOGGER.info("\n\nThe Top %s Albums based on Total Number of Purchases", number_of_albums)
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
 
-    print(tabulate(results, headers=["Album ID", " Album Title", "Number Of Purchases"], tablefmt="grid"))
+        print(tabulate(results, headers=["Album ID", " Album Title", "Number Of Purchases"], tablefmt="grid"))
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
-
-    session.close()
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
+    except AttributeError as err:
+        LOGGER.error(err)
+    except NoResultFound as err:
+        LOGGER.error(err)
+    finally:
+        session.close()

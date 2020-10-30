@@ -21,6 +21,7 @@ from sqlalchemy import desc, func, extract
 from sqlalchemy.orm import aliased
 
 # User Imports
+from sqlalchemy.orm.exc import NoResultFound
 from tabulate import tabulate
 
 import mservice.database_model as models
@@ -42,51 +43,58 @@ def get_top_manager_revenue(session, number_of_manager):
     :rtype: None
 
     """
+    try:
+        if not issubclass(type(session), sqlalchemy.orm.session.Session):
+            raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
 
-    if not issubclass(type(session), sqlalchemy.orm.session.Session):
-        raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
+        if not issubclass(type(number_of_manager), int) or number_of_manager < 1:
+            raise AttributeError("number of Managers should be integer and greater than 0")
 
-    if not issubclass(type(number_of_manager), int) or number_of_manager < 1:
-        raise AttributeError("number of Managers should be integer and greater than 0")
+        LOGGER.info("Performing Read Operation")
 
-    LOGGER.info("Performing Read Operation")
+        # Creating an alias for manager and employee Since they both are from same table and needs to self reference
+        manager = aliased(models.EmployeeTable)
+        employee = aliased(models.EmployeeTable)
 
-    # Creating an alias for manager and employee Since they both are from same table and needs to self reference
-    manager = aliased(models.EmployeeTable)
-    employee = aliased(models.EmployeeTable)
+        # Selecting the Manager Id, Manager Name, And his Total Revenue, By summing all his invoice total
+        query = session.query(employee.reports_to.label("manager_id"),
+                              func.concat(manager.first_name, " ", manager.last_name).label("manager_name"),
+                              func.sum(models.InvoiceTable.total).label("total_revenue"))
 
-    # Selecting the Manager Id, Manager Name, And his Total Revenue, By summing all his invoice total
-    query = session.query(employee.reports_to.label("manager_id"),
-                          func.concat(manager.first_name, " ", manager.last_name).label("manager_name"),
-                          func.sum(models.InvoiceTable.total).label("total_revenue"))
+        # Joining the customer table with invoice table, and with the previously aliased employee and manager table
+        query = query.join(models.CustomerTable, models.InvoiceTable.customer_id == models.CustomerTable.customer_id)
+        query = query.join(employee, models.CustomerTable.support_rep_id == employee.employee_id)
+        query = query.join(manager, employee.reports_to == manager.employee_id)
 
-    # Joining the customer table with invoice table, and with the previously aliased employee and manager table
-    query = query.join(models.CustomerTable, models.InvoiceTable.customer_id == models.CustomerTable.customer_id)
-    query = query.join(employee, models.CustomerTable.support_rep_id == employee.employee_id)
-    query = query.join(manager, employee.reports_to == manager.employee_id)
+        # Filtering out the invoices which occurred in month 8 and year 2012
+        query = query.filter(extract('month', models.InvoiceTable.invoice_date) == 8,
+                             extract('year', models.InvoiceTable.invoice_date) == 2012)
 
-    # Filtering out the invoices which occurred in month 8 and year 2012
-    query = query.filter(extract('month', models.InvoiceTable.invoice_date) == 8,
-                         extract('year', models.InvoiceTable.invoice_date) == 2012)
+        # Grouping by Manager Id
+        query = query.group_by("manager_id")
 
-    # Grouping by Manager Id
-    query = query.group_by("manager_id")
+        # Sorting By total revenue
+        query = query.order_by(desc("total_revenue"))
 
-    # Sorting By total revenue
-    query = query.order_by(desc("total_revenue"))
+        results = query.limit(number_of_manager).all()
 
-    results = query.limit(number_of_manager).all()
+        if not results:
+            raise NoResultFound("No Records Found")
 
-    LOGGER.info("\n\nThe Top %s Manager with Most Sales in Year: 2012 and Month: 08", number_of_manager)
+        LOGGER.info("\n\nThe Top %s Manager with Most Sales in Year: 2012 and Month: 08", number_of_manager)
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
 
-    print(tabulate(results, headers=["Manager ID", "Manager Name", "Total Revenue"], tablefmt="grid"))
+        print(tabulate(results, headers=["Manager ID", "Manager Name", "Total Revenue"], tablefmt="grid"))
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
-
-    session.close()
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
+    except AttributeError as err:
+        LOGGER.error(err)
+    except NoResultFound as err:
+        LOGGER.error(err)
+    finally:
+        session.close()

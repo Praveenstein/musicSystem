@@ -38,19 +38,16 @@ def main():
     # Configuring logging
     helper.configure_logging(log_config_file)
 
-    try:
-        # Getting a new engine
-        engine = connections.create_new_engine(helper.ARGUMENTS.dialect, helper.ARGUMENTS.driver,
-                                               helper.ARGUMENTS.user, helper.ARGUMENTS.password,
-                                               helper.ARGUMENTS.host, helper.ARGUMENTS.database)
+    # Getting a new engine
+    engine = connections.create_new_engine(helper.ARGUMENTS.dialect, helper.ARGUMENTS.driver,
+                                           helper.ARGUMENTS.user, helper.ARGUMENTS.password,
+                                           helper.ARGUMENTS.host, helper.ARGUMENTS.database)
 
-        # Getting a session factory binded to previously created engine
-        session_factory = connections.get_session_factory(engine)
-        session = session_factory()
+    # Getting a session factory binded to previously created engine
+    session_factory = connections.get_session_factory(engine)
+    session = session_factory()
 
-        db_aggregate.get_top_manager_revenue(session, helper.ARGUMENTS.number)
-    except AttributeError as err:
-        LOGGER.error(err)
+    db_aggregate.get_top_manager_revenue(session, helper.ARGUMENTS.number)
 
 
 if __name__ == '__main__':

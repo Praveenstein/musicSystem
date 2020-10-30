@@ -1,1347 +1,500 @@
-2020-10-29 09:58:29,846 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 09:58:29,883 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - Performing Read Operation
-2020-10-29 09:58:29,910 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 09:58:29,910 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 09:58:29,910 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 09:58:29,910 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 09:58:29,925 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 09:58:29,925 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 09:58:29,925 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 09:58:29,925 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 09:58:29,941 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 09:58:29,941 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 09:58:29,941 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 09:58:29,941 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 09:58:29,941 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 09:58:29,941 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 09:58:29,956 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 09:58:29,956 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DISTINCT track.`Name` AS track_name, genre.`Name` AS genre_name 
-FROM track INNER JOIN genre ON track.`GenreId` = genre.`GenreId` 
-WHERE track.`Name` IN (SELECT track.`Name` 
-FROM track GROUP BY track.`Name` 
-HAVING count(DISTINCT track.`GenreId`) > %(count_1)s) ORDER BY track.`Name` 
+2020-10-30 15:40:13,107 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 15:40:13,155 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - Performing Read Operation
+2020-10-30 15:40:13,155 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 15:40:13,155 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:40:13,171 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 15:40:13,171 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:40:13,171 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 15:40:13,171 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:40:13,171 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 15:40:13,171 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:40:13,202 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 15:40:13,202 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:40:13,202 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 15:40:13,202 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:40:13,202 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 15:40:13,202 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:40:13,202 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 15:40:13,218 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, sum(track.`Milliseconds`) AS total_playtime 
+FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY total_playtime DESC, track.`AlbumId` 
  LIMIT %(param_1)s
-2020-10-29 09:58:29,956 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'count_1': 1, 'param_1': 20}
-2020-10-29 09:58:30,019 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 10:17:22,963 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 10:17:22,990 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - Performing Read Operation
-2020-10-29 10:17:23,001 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 10:17:23,001 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 10:17:23,005 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 10:17:23,005 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 10:17:23,008 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 10:17:23,008 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 10:17:23,009 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 10:17:23,009 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 10:17:23,030 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 10:17:23,030 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 10:17:23,030 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 10:17:23,031 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 10:17:23,031 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 10:17:23,031 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 10:17:23,033 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 10:17:23,033 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DISTINCT track.`Name` AS track_name, genre.`Name` AS genre_name 
-FROM track INNER JOIN genre ON track.`GenreId` = genre.`GenreId` 
-WHERE track.`Name` IN (SELECT track.`Name` 
-FROM track GROUP BY track.`Name` 
-HAVING count(DISTINCT track.`GenreId`) > %(count_1)s) ORDER BY track.`Name` 
+2020-10-30 15:40:13,218 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 15:40:13,452 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - 
+
+The 20 Longest Albums Based On Playtime Of Its Tracks
+2020-10-30 15:40:13,468 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 15:42:14,094 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 15:42:14,141 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - Performing Read Operation
+2020-10-30 15:42:14,157 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 15:42:14,157 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:42:14,157 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 15:42:14,157 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:42:14,157 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 15:42:14,157 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:42:14,157 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 15:42:14,157 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:42:14,251 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 15:42:14,251 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:42:14,251 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 15:42:14,251 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:42:14,251 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 15:42:14,251 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 15:42:14,251 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 15:42:14,251 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, sum(track.`Milliseconds`) AS total_playtime 
+FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY total_playtime DESC, track.`AlbumId` 
  LIMIT %(param_1)s
-2020-10-29 10:17:23,034 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'count_1': 1, 'param_1': 20}
-2020-10-29 10:17:23,269 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 11:00:57,605 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 11:00:57,621 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_sales - Performing Read Operation
-2020-10-29 11:00:57,668 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 11:00:57,668 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:00:57,668 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 11:00:57,668 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT concat(employee_1.`FirstName`, %(concat_1)s, employee_1.`LastName`) AS employee_name, concat(employee_2.`FirstName`, %(concat_2)s, employee_2.`LastName`) AS manager_name 
-FROM employee AS employee_1 INNER JOIN employee AS employee_2 ON employee_1.`ReportsTo` = employee_2.`EmployeeId` 
+2020-10-30 15:42:14,251 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 15:42:14,251 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - 
+
+The 20 Longest Albums Based On Playtime Of Its Tracks
+2020-10-30 15:42:14,266 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:04:40,463 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:04:40,549 -INFO - mservice.read_operation.read_records- read_records.py - perform_read_join - Performing Read Operation
+2020-10-30 16:04:40,561 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:04:40,562 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:04:40,565 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:04:40,565 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:04:40,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:04:40,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:04:40,569 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:04:40,569 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:04:40,571 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:04:40,571 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:04:40,572 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:04:40,572 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:04:40,573 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:04:40,573 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:04:40,574 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:04:40,576 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT invoice.`InvoiceId` AS `invoice_InvoiceId`, invoice.`CustomerId` AS `invoice_CustomerId`, invoice.`InvoiceDate` AS `invoice_InvoiceDate`, invoice.`Total` AS `invoice_Total`, customer.`FirstName` AS `customer_FirstName`, employee.`FirstName` AS `Employee_Name`, employee.`Title` AS `employee_Title`, track.`Name` AS `track_Name` 
+FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` INNER JOIN invoiceline ON invoice.`InvoiceId` = invoiceline.`InvoiceId` INNER JOIN employee ON customer.`SupportRepId` = employee.`EmployeeId` INNER JOIN track ON invoiceline.`TrackId` = track.`TrackId` ORDER BY invoice.`InvoiceId` 
  LIMIT %(param_1)s
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'concat_2': ' ', 'param_1': 20}
-2020-10-29 11:00:57,683 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 11:12:05,536 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 11:12:05,567 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_sales - Performing Read Operation
-2020-10-29 11:12:05,598 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 11:12:05,598 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:12:05,598 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 11:12:05,598 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT employee_1.`ReportsTo` AS manager_id, concat(employee_2.`FirstName`, %(concat_1)s, employee_2.`LastName`) AS manager_name, sum(invoice.`Total`) AS total_revenue 
-FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` INNER JOIN employee AS employee_1 ON customer.`SupportRepId` = employee_1.`EmployeeId` INNER JOIN employee AS employee_2 ON employee_1.`ReportsTo` = employee_2.`EmployeeId` 
-WHERE EXTRACT(month FROM invoice.`InvoiceDate`) = %(param_1)s AND EXTRACT(year FROM invoice.`InvoiceDate`) = %(param_2)s GROUP BY manager_id ORDER BY total_revenue DESC 
- LIMIT %(param_3)s
-2020-10-29 11:12:05,614 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 20}
-2020-10-29 11:12:05,630 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 11:25:16,865 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 11:25:16,938 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_revenue - Performing Read Operation
-2020-10-29 11:25:16,980 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 11:25:16,981 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:25:16,984 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 11:25:16,984 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:25:16,988 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 11:25:16,988 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:25:16,989 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 11:25:16,989 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:25:16,991 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 11:25:16,991 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:25:16,991 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 11:25:16,991 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:25:16,992 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 11:25:16,992 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:25:16,993 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 11:25:16,996 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT employee_1.`ReportsTo` AS manager_id, concat(employee_2.`FirstName`, %(concat_1)s, employee_2.`LastName`) AS manager_name, sum(invoice.`Total`) AS total_revenue 
-FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` INNER JOIN employee AS employee_1 ON customer.`SupportRepId` = employee_1.`EmployeeId` INNER JOIN employee AS employee_2 ON employee_1.`ReportsTo` = employee_2.`EmployeeId` 
-WHERE EXTRACT(month FROM invoice.`InvoiceDate`) = %(param_1)s AND EXTRACT(year FROM invoice.`InvoiceDate`) = %(param_2)s GROUP BY manager_id ORDER BY total_revenue DESC 
- LIMIT %(param_3)s
-2020-10-29 11:25:16,996 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 20}
-2020-10-29 11:25:17,004 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 11:46:05,003 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 11:46:05,018 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 11:46:05,034 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 11:46:05,034 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:46:05,034 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 11:46:05,034 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:46:05,034 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 11:46:05,034 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:46:05,034 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 11:46:05,034 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:46:05,049 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 11:46:05,049 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:46:05,049 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 11:46:05,049 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:46:05,049 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 11:46:05,049 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:46:05,049 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 11:46:05,049 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`TrackId` AS `track_TrackId`, track.`Name` AS `track_Name`, track.`GenreId` AS `track_GenreId`, count(invoiceline.`InvoiceId`) AS number_of_purchases 
-FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` GROUP BY track.`TrackId` ORDER BY track.`GenreId`, number_of_purchases DESC, track.`TrackId`
-2020-10-29 11:46:05,049 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 11:46:05,128 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 12:58:02,757 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 12:58:02,788 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 12:58:02,791 -ERROR - __main__- main__top_tracks_for_genre_q5.py - main - track_id
-2020-10-29 12:59:21,144 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 12:59:21,171 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 12:59:21,174 -ERROR - __main__- main__top_tracks_for_genre_q5.py - main - track_id
-2020-10-29 12:59:34,516 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 12:59:34,543 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 12:59:34,545 -ERROR - __main__- main__top_tracks_for_genre_q5.py - main - track_id
-2020-10-29 13:00:41,957 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:00:42,027 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 13:01:42,087 -ERROR - __main__- main__top_tracks_for_genre_q5.py - main - track_id
-2020-10-29 13:02:10,355 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:02:10,427 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 13:02:35,723 -ERROR - __main__- main__top_tracks_for_genre_q5.py - main - track_id
-2020-10-29 13:03:10,590 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:03:10,658 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 13:03:17,350 -ERROR - __main__- main__top_tracks_for_genre_q5.py - main - 'Alias' object has no attribute 'track_id'
-2020-10-29 13:03:54,026 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:03:54,097 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 13:03:59,709 -ERROR - __main__- main__top_tracks_for_genre_q5.py - main - genre_id
-2020-10-29 13:06:13,231 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:06:13,256 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 13:06:13,281 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 13:06:13,281 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:13,287 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 13:06:13,287 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:13,290 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 13:06:13,290 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:13,291 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 13:06:13,291 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:13,295 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:06:13,296 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:13,296 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:06:13,297 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:13,297 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 13:06:13,297 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:13,298 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 13:06:13,300 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
-FROM (SELECT track.`TrackId` AS track_id, track.`Name` AS track_name, track.`GenreId` AS genre_id, genre.`Name` AS genre_name, count(invoiceline.`InvoiceId`) AS number_of_purchases, row_number() OVER (PARTITION BY track.`GenreId` ORDER BY track.`GenreId`, count(invoiceline.`InvoiceId`) DESC) AS genre_rank 
-FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` INNER JOIN genre ON track.`GenreId` = genre.`GenreId` GROUP BY track.`TrackId`) AS anon_1 
-WHERE anon_1.genre_rank < %(genre_rank_1)s
-2020-10-29 13:06:13,300 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'genre_rank_1': 3}
-2020-10-29 13:06:13,321 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 13:06:38,412 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:06:38,439 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 13:06:38,452 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 13:06:38,453 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:38,456 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 13:06:38,457 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:38,460 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 13:06:38,460 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:38,461 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 13:06:38,461 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:38,463 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:06:38,463 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:38,464 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:06:38,464 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:38,465 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 13:06:38,465 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:06:38,466 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 13:06:38,468 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
-FROM (SELECT track.`TrackId` AS track_id, track.`Name` AS track_name, track.`GenreId` AS genre_id, genre.`Name` AS genre_name, count(invoiceline.`InvoiceId`) AS number_of_purchases, row_number() OVER (PARTITION BY track.`GenreId` ORDER BY track.`GenreId`, count(invoiceline.`InvoiceId`) DESC) AS genre_rank 
-FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` INNER JOIN genre ON track.`GenreId` = genre.`GenreId` GROUP BY track.`TrackId`) AS anon_1 
-WHERE anon_1.genre_rank < %(genre_rank_1)s
-2020-10-29 13:06:38,468 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'genre_rank_1': 3}
-2020-10-29 13:06:38,485 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 13:07:26,574 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:07:26,590 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 13:07:26,605 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 13:07:26,605 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:07:26,605 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 13:07:26,605 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:07:26,605 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
-FROM (SELECT track.`TrackId` AS track_id, track.`Name` AS track_name, track.`GenreId` AS genre_id, genre.`Name` AS genre_name, count(invoiceline.`InvoiceId`) AS number_of_purchases, row_number() OVER (PARTITION BY track.`GenreId` ORDER BY track.`GenreId`, count(invoiceline.`InvoiceId`) DESC) AS genre_rank 
-FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` INNER JOIN genre ON track.`GenreId` = genre.`GenreId` GROUP BY track.`TrackId`) AS anon_1 
-WHERE anon_1.genre_rank < %(genre_rank_1)s
-2020-10-29 13:07:26,621 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'genre_rank_1': 3}
-2020-10-29 13:07:26,637 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 13:11:40,054 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:11:40,080 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_tracks_for_genre - Performing Read Operation
-2020-10-29 13:11:40,092 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 13:11:40,092 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:11:40,096 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 13:11:40,096 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:11:40,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 13:11:40,100 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:11:40,100 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 13:11:40,100 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:11:40,103 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:11:40,103 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:11:40,103 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:11:40,104 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:11:40,104 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 13:11:40,104 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:11:40,105 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 13:11:40,107 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
-FROM (SELECT track.`TrackId` AS track_id, track.`Name` AS track_name, track.`GenreId` AS genre_id, genre.`Name` AS genre_name, count(invoiceline.`InvoiceId`) AS number_of_purchases, row_number() OVER (PARTITION BY track.`GenreId` ORDER BY track.`GenreId`, count(invoiceline.`InvoiceId`) DESC) AS track_rank 
-FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` INNER JOIN genre ON track.`GenreId` = genre.`GenreId` GROUP BY track.`TrackId`) AS anon_1 
-WHERE anon_1.track_rank < %(track_rank_1)s
-2020-10-29 13:11:40,107 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'track_rank_1': 3}
-2020-10-29 13:11:40,124 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 13:19:23,208 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:19:23,234 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_top_tracks_for_genre - Performing Read Operation
-2020-10-29 13:19:23,246 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 13:19:23,246 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:19:23,250 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 13:19:23,250 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:19:23,253 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 13:19:23,253 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:19:23,254 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 13:19:23,254 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:19:23,256 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:19:23,256 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:19:23,257 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:19:23,257 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:19:23,258 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 13:19:23,258 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:19:23,260 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 13:19:23,261 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
-FROM (SELECT track.`TrackId` AS track_id, track.`Name` AS track_name, track.`GenreId` AS genre_id, genre.`Name` AS genre_name, count(invoiceline.`InvoiceId`) AS number_of_purchases, row_number() OVER (PARTITION BY track.`GenreId` ORDER BY track.`GenreId`, count(invoiceline.`InvoiceId`) DESC) AS track_rank 
-FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` INNER JOIN genre ON track.`GenreId` = genre.`GenreId` GROUP BY track.`TrackId`) AS anon_1 
-WHERE anon_1.track_rank < %(track_rank_1)s
-2020-10-29 13:19:23,261 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'track_rank_1': 3}
-2020-10-29 13:19:23,280 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 13:25:41,707 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 13:25:41,734 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_top_tracks_for_genre - Performing Read Operation
-2020-10-29 13:25:41,747 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 13:25:41,748 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:25:41,751 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 13:25:41,751 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:25:41,754 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 13:25:41,754 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:25:41,755 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 13:25:41,755 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:25:41,757 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:25:41,757 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:25:41,758 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 13:25:41,758 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:25:41,759 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 13:25:41,759 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 13:25:41,760 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 13:25:41,761 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
-FROM (SELECT track.`TrackId` AS track_id, track.`Name` AS track_name, track.`GenreId` AS genre_id, genre.`Name` AS genre_name, count(invoiceline.`InvoiceId`) AS number_of_purchases, row_number() OVER (PARTITION BY track.`GenreId` ORDER BY count(invoiceline.`InvoiceId`) DESC) AS track_rank 
-FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` INNER JOIN genre ON track.`GenreId` = genre.`GenreId` GROUP BY track.`TrackId`) AS anon_1 
-WHERE anon_1.track_rank < %(track_rank_1)s
-2020-10-29 13:25:41,761 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'track_rank_1': 3}
-2020-10-29 13:25:41,779 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 14:30:32,485 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 14:30:32,521 -INFO - mservice.aggregate_operation.add_genre_to_album_q11- add_genre_to_album_q11.py - add_genre_to_album - Performing Read Operation
-2020-10-29 14:31:22,042 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 14:31:22,089 -INFO - mservice.aggregate_operation.add_genre_to_album_q11- add_genre_to_album_q11.py - add_genre_to_album - Performing Read Operation
-2020-10-29 14:31:22,241 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 14:31:22,242 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 14:31:22,537 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 14:31:22,538 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 14:31:22,743 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 14:31:22,743 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 14:31:22,764 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 14:31:22,764 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 14:31:22,866 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 14:31:22,866 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 14:31:22,896 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 14:31:22,896 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 14:31:22,897 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 14:31:22,897 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 14:31:22,903 -INFO - sqlalchemy.engine.base.Engine- log.py - info - DESCRIBE `
-                    SELECT DISTINCT
-                        a.title AS album,
-                        g.Name AS genre	  
-                    FROM track t
-                    INNER JOIN album a
-                        ON t.AlbumId = a.AlbumId
-                    INNER JOIN genre g
-                        ON t.GenreId = g.GenreId
-                    -- WHERE t.AlbumId = 102 OR t.AlbumId = 251 
-                    ORDER BY t.AlbumId
-                    LIMIT 20
-                `
-2020-10-29 14:31:22,904 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 14:31:22,904 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 14:31:22,905 -INFO - sqlalchemy.engine.base.Engine- log.py - info - 
-                    SELECT DISTINCT
-                        a.title AS album,
-                        g.Name AS genre	  
-                    FROM track t
-                    INNER JOIN album a
-                        ON t.AlbumId = a.AlbumId
-                    INNER JOIN genre g
-                        ON t.GenreId = g.GenreId
-                    -- WHERE t.AlbumId = 102 OR t.AlbumId = 251 
-                    ORDER BY t.AlbumId
-                    LIMIT 20
-                
-2020-10-29 14:31:22,905 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 16:56:58,446 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 16:56:58,606 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_top_tracks_for_genre - Performing Read Operation
-2020-10-29 16:56:58,636 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 16:56:58,636 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 16:56:58,636 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 16:56:58,636 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 16:56:58,646 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 16:56:58,646 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 16:56:58,646 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 16:56:58,646 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 16:56:58,646 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 16:56:58,646 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 16:56:58,656 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 16:56:58,656 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 16:56:58,656 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 16:56:58,656 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 16:56:58,656 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 16:56:58,656 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
-FROM (SELECT track.`TrackId` AS track_id, track.`Name` AS track_name, track.`GenreId` AS genre_id, genre.`Name` AS genre_name, count(invoiceline.`InvoiceId`) AS number_of_purchases, row_number() OVER (PARTITION BY track.`GenreId` ORDER BY count(invoiceline.`InvoiceId`) DESC) AS track_rank 
-FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` INNER JOIN genre ON track.`GenreId` = genre.`GenreId` GROUP BY track.`TrackId`) AS anon_1 
-WHERE anon_1.track_rank < %(track_rank_1)s
-2020-10-29 16:56:58,656 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'track_rank_1': 3}
-2020-10-29 16:56:59,056 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 18:50:55,357 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 18:50:55,576 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 18:50:55,591 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 18:50:55,591 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:50:55,607 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:50:55,622 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 18:50:55,622 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:50:55,622 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 18:50:55,622 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
+2020-10-30 16:04:40,576 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 16:04:40,728 -INFO - mservice.read_operation.read_records- read_records.py - perform_read_join - 
+
+The 20 Invoice Records Are
+2020-10-30 16:04:40,744 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:10:18,471 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:10:18,521 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
+2020-10-30 16:10:18,531 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:10:18,531 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:10:18,535 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:10:18,535 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:10:18,538 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:10:18,538 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:10:18,539 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:10:18,539 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:10:18,541 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:10:18,542 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:10:18,542 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:10:18,542 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:10:18,543 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:10:18,543 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:10:18,544 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:10:18,545 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
 FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
  LIMIT %(param_1)s
-2020-10-29 18:50:55,622 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 18:50:55,688 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 18:56:06,869 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 18:56:06,915 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 18:56:06,915 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 18:56:06,915 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 18:56:06,931 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 18:56:06,947 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 18:56:45,927 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 18:56:45,974 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 18:56:45,974 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 18:56:45,974 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 18:56:45,990 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 18:56:46,007 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 18:57:11,016 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 18:57:11,063 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 18:57:11,063 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 18:57:11,063 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:57:11,063 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 18:57:11,063 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:57:11,079 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 18:57:11,094 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 18:57:11,094 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 18:57:11,094 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 18:58:31,241 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 18:58:31,288 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 18:58:31,298 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 18:58:31,298 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:58:31,301 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 18:58:31,301 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:58:31,305 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 18:58:31,305 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:58:31,305 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 18:58:31,305 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:58:31,307 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:58:31,308 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:58:31,308 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 18:58:31,309 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:58:31,309 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 18:58:31,309 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 18:58:31,310 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 18:58:31,312 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 18:58:31,312 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 18:58:31,667 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:02:06,531 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:02:06,581 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:02:06,590 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:02:06,591 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:02:06,594 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:02:06,595 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:02:06,598 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:02:06,598 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:02:06,599 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:02:06,599 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:02:06,601 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:02:06,601 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:02:06,602 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:02:06,602 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:02:06,602 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:02:06,602 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:02:06,603 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:02:06,605 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:02:06,605 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:02:06,652 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:03:20,073 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:03:20,121 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:03:20,131 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:03:20,131 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:03:20,135 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:03:20,135 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:03:20,138 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:03:20,139 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:03:20,140 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:03:20,140 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:03:20,142 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:03:20,142 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:03:20,143 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:03:20,143 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:03:20,143 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:03:20,143 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:03:20,145 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:03:20,146 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:03:20,146 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:03:20,158 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:12:09,933 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:12:09,983 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:12:09,992 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:12:09,992 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:12:09,996 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:12:09,996 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:12:10,000 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:12:10,000 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:12:10,000 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:12:10,000 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:12:10,003 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:12:10,003 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:12:10,003 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:12:10,003 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:12:10,004 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:12:10,004 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:12:10,006 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:12:10,007 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:12:10,007 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:12:10,014 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:13:41,920 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:13:41,981 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:13:41,993 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:13:41,993 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:13:41,997 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:13:41,997 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:13:42,001 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:13:42,001 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:13:42,002 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:13:42,002 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:13:42,004 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:13:42,004 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:13:42,006 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:13:42,006 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:13:42,007 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:13:42,007 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:13:42,008 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:13:42,010 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:13:42,010 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:13:42,018 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:15:06,847 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:15:06,895 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:15:06,904 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:15:06,904 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:06,907 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:15:06,907 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:06,910 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:15:06,910 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:06,911 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:15:06,911 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:06,913 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:15:06,914 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:06,914 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:15:06,914 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:06,915 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:15:06,915 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:06,916 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:15:06,917 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:15:06,917 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:15:06,924 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:15:59,002 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:15:59,052 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:15:59,062 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:15:59,062 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:59,065 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:15:59,066 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:59,069 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:15:59,069 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:59,069 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:15:59,069 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:59,071 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:15:59,072 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:59,072 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:15:59,072 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:59,073 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:15:59,073 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:15:59,074 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:15:59,075 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:15:59,075 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:15:59,085 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:17:38,605 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:17:38,653 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:17:38,663 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:17:38,663 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:17:38,666 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:17:38,666 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:17:38,670 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:17:38,670 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:17:38,670 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:17:38,670 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:17:38,672 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:17:38,672 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:17:38,673 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:17:38,673 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:17:38,673 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:17:38,674 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:17:38,675 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:17:38,676 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:17:38,676 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:17:38,685 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:19:23,812 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:19:23,859 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:19:23,868 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:19:23,869 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:23,872 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:19:23,872 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:23,875 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:19:23,876 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:23,876 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:19:23,876 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:23,879 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:19:23,879 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:23,879 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:19:23,880 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:23,880 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:19:23,880 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:23,881 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:19:23,882 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:19:23,883 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:19:23,889 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - The Top 20 Albums based on number of tracks are
-2020-10-29 19:19:23,892 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:19:45,593 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:19:45,642 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:19:45,651 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:19:45,651 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:45,654 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:19:45,654 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:45,658 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:19:45,658 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:45,659 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:19:45,659 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:45,661 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:19:45,661 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:45,662 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:19:45,662 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:45,662 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:19:45,663 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:19:45,664 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:19:45,665 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:19:45,665 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:19:45,671 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - 
+2020-10-30 16:10:18,545 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 16:10:18,590 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - 
 
 The Top 20 Albums based on number of tracks are
-2020-10-29 19:19:45,674 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:20:02,346 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:20:02,394 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - Performing Read Operation
-2020-10-29 19:20:02,402 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:20:02,402 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:20:02,406 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:20:02,406 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:20:02,409 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:20:02,409 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:20:02,410 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:20:02,410 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:20:02,412 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:20:02,412 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:20:02,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:20:02,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:20:02,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:20:02,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:20:02,414 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:20:02,416 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(track.`TrackId`) AS number_of_tracks 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_tracks DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:20:02,416 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:20:02,422 -INFO - mservice.aggregate_operation.top_album_tracks_q1- top_album_tracks_q1.py - get_top_album_tracks - 
-
-The Top 20 Albums based on number of tracks are
-2020-10-29 19:20:02,426 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:24:02,565 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:24:02,614 -INFO - mservice.aggregate_operation.top_artist_tracks_q2- top_artist_tracks_q2.py - get_top_artist_tracks - Performing Read Operation
-2020-10-29 19:24:02,624 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:24:02,624 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:24:02,628 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:24:02,628 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:24:02,630 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:24:02,630 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:24:02,631 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:24:02,631 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:24:02,633 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:24:02,633 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:24:02,634 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:24:02,634 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:24:02,634 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:24:02,635 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:24:02,636 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:24:02,637 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT album.`ArtistId` AS `album_ArtistId`, artist.`Name` AS `artist_Name`, count(track.`TrackId`) AS number_of_tracks 
+2020-10-30 16:10:18,595 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:11:37,709 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:11:37,759 -INFO - mservice.aggregate_operation.top_artist_tracks_q2- top_artist_tracks_q2.py - get_top_artist_tracks - Performing Read Operation
+2020-10-30 16:11:37,769 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:11:37,769 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:11:37,773 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:11:37,774 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:11:37,777 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:11:37,777 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:11:37,778 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:11:37,778 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:11:37,780 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:11:37,780 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:11:37,781 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:11:37,781 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:11:37,781 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:11:37,781 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:11:37,783 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:11:37,784 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT album.`ArtistId` AS `album_ArtistId`, artist.`Name` AS `artist_Name`, count(track.`TrackId`) AS number_of_tracks 
 FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` INNER JOIN artist ON album.`ArtistId` = artist.`ArtistId` GROUP BY album.`ArtistId` ORDER BY number_of_tracks DESC, album.`ArtistId` 
  LIMIT %(param_1)s
-2020-10-29 19:24:02,638 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:24:02,789 -INFO - mservice.aggregate_operation.top_artist_tracks_q2- top_artist_tracks_q2.py - get_top_artist_tracks - 
+2020-10-30 16:11:37,784 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 16:11:37,817 -INFO - mservice.aggregate_operation.top_artist_tracks_q2- top_artist_tracks_q2.py - get_top_artist_tracks - 
 
 The Top 20 Artist based on number of tracks are
-2020-10-29 19:24:02,792 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:27:32,900 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:27:32,949 -INFO - mservice.aggregate_operation.top_customer_amount_q3- top_customer_amount_q3.py - get_top_customers - Performing Read Operation
-2020-10-29 19:27:32,959 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:27:32,960 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:27:32,963 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:27:32,963 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:27:32,966 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:27:32,966 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:27:32,967 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:27:32,967 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:27:32,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:27:32,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:27:32,970 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:27:32,970 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:27:32,970 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:27:32,971 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:27:32,972 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:27:32,973 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT invoice.`CustomerId` AS `invoice_CustomerId`, concat(customer.`FirstName`, %(concat_1)s, customer.`LastName`) AS name, sum(invoice.`Total`) AS total_amount 
+2020-10-30 16:11:37,818 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:12:44,907 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:12:44,954 -INFO - mservice.aggregate_operation.top_customer_amount_q3- top_customer_amount_q3.py - get_top_customers - Performing Read Operation
+2020-10-30 16:12:44,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:12:44,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:12:44,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:12:44,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:12:44,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:12:44,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:12:44,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:12:44,969 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:12:44,985 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:12:44,985 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:12:44,985 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:12:44,985 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:12:44,985 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:12:44,985 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:12:44,985 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:12:44,985 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT invoice.`CustomerId` AS `invoice_CustomerId`, concat(customer.`FirstName`, %(concat_1)s, customer.`LastName`) AS name, sum(invoice.`Total`) AS total_amount 
 FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` GROUP BY invoice.`CustomerId` ORDER BY total_amount DESC, invoice.`CustomerId` 
  LIMIT %(param_1)s
-2020-10-29 19:27:32,973 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 20}
-2020-10-29 19:27:33,259 -INFO - mservice.aggregate_operation.top_customer_amount_q3- top_customer_amount_q3.py - get_top_customers - 
+2020-10-30 16:12:44,985 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 20}
+2020-10-30 16:12:45,032 -INFO - mservice.aggregate_operation.top_customer_amount_q3- top_customer_amount_q3.py - get_top_customers - 
 
 The Top 20 Customers based on Total Amount of Purchases
-2020-10-29 19:27:33,260 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:30:40,929 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:30:40,978 -INFO - mservice.aggregate_operation.top_album_purchases_q4- top_album_purchases_q4.py - get_top_album_purchases - Performing Read Operation
-2020-10-29 19:30:40,988 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:30:40,988 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:30:40,991 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:30:40,991 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:30:40,994 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:30:40,995 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:30:40,995 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:30:40,995 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:30:40,997 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:30:40,997 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:30:40,998 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:30:40,998 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:30:40,999 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:30:40,999 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:30:41,000 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:30:41,001 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(DISTINCT invoiceline.`InvoiceId`) AS number_of_purchases 
+2020-10-30 16:12:45,063 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:14:05,138 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:14:05,187 -INFO - mservice.aggregate_operation.top_album_purchases_q4- top_album_purchases_q4.py - get_top_album_purchases - Performing Read Operation
+2020-10-30 16:14:05,197 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:14:05,197 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:14:05,201 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:14:05,201 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:14:05,204 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:14:05,204 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:14:05,205 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:14:05,205 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:14:05,207 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:14:05,207 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:14:05,208 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:14:05,208 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:14:05,208 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:14:05,208 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:14:05,209 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:14:05,211 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(DISTINCT invoiceline.`InvoiceId`) AS number_of_purchases 
 FROM invoiceline INNER JOIN track ON invoiceline.`TrackId` = track.`TrackId` INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_purchases DESC, track.`AlbumId` 
  LIMIT %(param_1)s
-2020-10-29 19:30:41,001 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:30:41,028 -INFO - mservice.aggregate_operation.top_album_purchases_q4- top_album_purchases_q4.py - get_top_album_purchases - 
+2020-10-30 16:14:05,211 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 16:14:05,291 -INFO - mservice.aggregate_operation.top_album_purchases_q4- top_album_purchases_q4.py - get_top_album_purchases - 
 
 The Top 20 Albums based on Total Number of Purchases
-2020-10-29 19:30:41,029 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:39:13,156 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:39:13,206 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_top_tracks_for_genre - Performing Read Operation
-2020-10-29 19:39:13,218 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:39:13,218 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:13,221 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:39:13,221 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:13,225 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:39:13,225 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:13,225 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:39:13,226 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:13,233 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:39:13,233 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:13,234 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:39:13,234 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:13,235 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:39:13,235 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:13,236 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:39:13,237 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
+2020-10-30 16:14:05,293 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:15:15,417 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:15:15,463 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_top_tracks_for_genre - Performing Read Operation
+2020-10-30 16:15:15,463 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:15:15,463 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
 FROM (SELECT track.`TrackId` AS track_id, track.`Name` AS track_name, track.`GenreId` AS genre_id, genre.`Name` AS genre_name, count(invoiceline.`InvoiceId`) AS number_of_purchases, row_number() OVER (PARTITION BY track.`GenreId` ORDER BY count(invoiceline.`InvoiceId`) DESC) AS track_rank 
 FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` INNER JOIN genre ON track.`GenreId` = genre.`GenreId` GROUP BY track.`TrackId`) AS anon_1 
 WHERE anon_1.track_rank < %(track_rank_1)s
-2020-10-29 19:39:13,237 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'track_rank_1': 21}
-2020-10-29 19:39:13,290 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_top_tracks_for_genre - 
-
-The Top 20 Tracks For all Genre, Based On Number Of Purchases
-2020-10-29 19:39:13,317 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:39:36,495 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:39:36,548 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_top_tracks_for_genre - Performing Read Operation
-2020-10-29 19:39:36,560 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:39:36,560 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:36,563 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:39:36,563 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:36,563 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:39:36,563 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT anon_1.track_id AS anon_1_track_id, anon_1.track_name AS anon_1_track_name, anon_1.genre_id AS anon_1_genre_id, anon_1.genre_name AS anon_1_genre_name, anon_1.number_of_purchases AS anon_1_number_of_purchases 
-FROM (SELECT track.`TrackId` AS track_id, track.`Name` AS track_name, track.`GenreId` AS genre_id, genre.`Name` AS genre_name, count(invoiceline.`InvoiceId`) AS number_of_purchases, row_number() OVER (PARTITION BY track.`GenreId` ORDER BY count(invoiceline.`InvoiceId`) DESC) AS track_rank 
-FROM track INNER JOIN invoiceline ON track.`TrackId` = invoiceline.`TrackId` INNER JOIN genre ON track.`GenreId` = genre.`GenreId` GROUP BY track.`TrackId`) AS anon_1 
-WHERE anon_1.track_rank < %(track_rank_1)s
-2020-10-29 19:39:36,568 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'track_rank_1': 3}
-2020-10-29 19:39:36,599 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_top_tracks_for_genre - 
+2020-10-30 16:15:15,479 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'track_rank_1': 3}
+2020-10-30 16:15:15,655 -INFO - mservice.aggregate_operation.top_tracks_for_genre_q5- top_tracks_for_genre_q5.py - get_top_tracks_for_genre - 
 
 The Top 2 Tracks For all Genre, Based On Number Of Purchases
-2020-10-29 19:39:36,603 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:44:17,091 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:44:17,148 -INFO - mservice.aggregate_operation.longest_tracks_q6- longest_tracks_q6.py - get_longest_tracks - Performing Read Operation
-2020-10-29 19:44:17,159 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:44:17,160 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:17,163 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:44:17,163 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:17,167 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:44:17,167 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:17,168 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:44:17,168 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:17,171 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:44:17,171 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:17,172 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:44:17,172 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:17,172 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:44:17,173 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:17,174 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:44:17,175 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`TrackId` AS `track_TrackId`, track.`Name` AS `track_Name`, track.`Milliseconds` AS `track_Milliseconds` 
+2020-10-30 16:15:15,671 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:16:30,076 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:16:30,124 -INFO - mservice.aggregate_operation.longest_tracks_q6- longest_tracks_q6.py - get_longest_tracks - Performing Read Operation
+2020-10-30 16:16:30,133 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:16:30,134 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:16:30,137 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:16:30,137 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:16:30,141 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:16:30,141 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:16:30,141 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:16:30,142 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:16:30,143 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:16:30,143 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:16:30,144 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:16:30,144 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:16:30,145 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:16:30,145 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:16:30,146 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:16:30,147 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`TrackId` AS `track_TrackId`, track.`Name` AS `track_Name`, track.`Milliseconds` AS `track_Milliseconds` 
 FROM track ORDER BY track.`Milliseconds` DESC, track.`TrackId` 
  LIMIT %(param_1)s
-2020-10-29 19:44:17,175 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:44:17,179 -INFO - mservice.aggregate_operation.longest_tracks_q6- longest_tracks_q6.py - get_longest_tracks - 
+2020-10-30 16:16:30,147 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 16:16:30,150 -INFO - mservice.aggregate_operation.longest_tracks_q6- longest_tracks_q6.py - get_longest_tracks - 
 
 The Top 20 Tracks, Based On It's Playtime
-2020-10-29 19:44:17,181 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:44:52,273 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:44:52,322 -INFO - mservice.aggregate_operation.longest_tracks_q6- longest_tracks_q6.py - get_longest_tracks - Performing Read Operation
-2020-10-29 19:44:52,331 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:44:52,331 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:52,335 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:44:52,335 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:52,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:44:52,339 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:52,339 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:44:52,339 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:52,341 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:44:52,341 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:52,342 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:44:52,342 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:52,342 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:44:52,343 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:44:52,344 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:44:52,344 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`TrackId` AS `track_TrackId`, track.`Name` AS `track_Name`, track.`Milliseconds` AS `track_Milliseconds` 
-FROM track ORDER BY track.`Milliseconds` DESC, track.`TrackId` 
- LIMIT %(param_1)s
-2020-10-29 19:44:52,345 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:44:52,348 -INFO - mservice.aggregate_operation.longest_tracks_q6- longest_tracks_q6.py - get_longest_tracks - 
-
-The Top 20 Tracks, Based On It's Playtime
-2020-10-29 19:44:52,349 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:45:21,744 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:45:21,791 -INFO - mservice.aggregate_operation.longest_tracks_q6- longest_tracks_q6.py - get_longest_tracks - Performing Read Operation
-2020-10-29 19:45:21,800 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:45:21,800 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:45:21,803 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:45:21,803 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:45:21,806 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:45:21,806 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:45:21,807 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:45:21,807 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:45:21,809 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:45:21,809 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:45:21,810 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:45:21,810 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:45:21,811 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:45:21,811 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:45:21,812 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:45:21,813 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`TrackId` AS `track_TrackId`, track.`Name` AS `track_Name`, track.`Milliseconds` AS `track_Milliseconds` 
-FROM track ORDER BY track.`Milliseconds` DESC, track.`TrackId` 
- LIMIT %(param_1)s
-2020-10-29 19:45:21,813 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:45:21,816 -INFO - mservice.aggregate_operation.longest_tracks_q6- longest_tracks_q6.py - get_longest_tracks - 
-
-The Top 20 Tracks, Based On It's Playtime
-2020-10-29 19:45:21,828 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:49:32,714 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:49:32,771 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - Performing Read Operation
-2020-10-29 19:49:32,783 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:49:32,783 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:49:32,787 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:49:32,787 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:49:32,790 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:49:32,791 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:49:32,792 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:49:32,792 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:49:32,794 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:49:32,794 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:49:32,795 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:49:32,795 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:49:32,796 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:49:32,796 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:49:32,797 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:49:32,804 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, sum(track.`Milliseconds`) AS total_playtime 
+2020-10-30 16:16:30,151 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:17:34,506 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:17:34,556 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - Performing Read Operation
+2020-10-30 16:17:34,566 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:17:34,566 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:17:34,570 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:17:34,570 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:17:34,574 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:17:34,574 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:17:34,575 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:17:34,575 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:17:34,577 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:17:34,577 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:17:34,577 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:17:34,578 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:17:34,578 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:17:34,578 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:17:34,579 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:17:34,580 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, sum(track.`Milliseconds`) AS total_playtime 
 FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY total_playtime DESC, track.`AlbumId` 
  LIMIT %(param_1)s
-2020-10-29 19:49:32,805 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:49:32,813 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - 
+2020-10-30 16:17:34,581 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 16:17:34,589 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - 
 
 The 20 Longest Albums Based On Playtime Of Its Tracks
-2020-10-29 19:49:32,816 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:51:47,453 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:51:47,502 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - Performing Read Operation
-2020-10-29 19:51:47,513 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:51:47,513 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:51:47,521 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:51:47,521 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, sum(track.`Milliseconds`) AS total_playtime 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY total_playtime DESC, track.`AlbumId` 
- LIMIT %(param_1)s
-2020-10-29 19:51:47,522 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:51:47,538 -INFO - mservice.aggregate_operation.longest_album_q7- longest_album_q7.py - get_longest_album - 
-
-The 20 Longest Albums Based On Playtime Of Its Tracks
-2020-10-29 19:51:47,553 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:56:49,000 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:56:49,050 -INFO - mservice.aggregate_operation.number_of_playlist_tracks_q8- number_of_playlist_tracks_q8.py - get_number_of_playlist_tracks - Performing Read Operation
-2020-10-29 19:56:49,060 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:56:49,060 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:56:49,060 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:56:49,060 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT playlisttrack.`TrackId` AS `playlisttrack_TrackId`, track.`Name` AS `track_Name`, count(playlisttrack.`PlaylistId`) AS number_of_playlist 
+2020-10-30 16:17:34,595 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:18:57,090 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:18:57,147 -INFO - mservice.aggregate_operation.number_of_playlist_tracks_q8- number_of_playlist_tracks_q8.py - get_number_of_playlist_tracks - Performing Read Operation
+2020-10-30 16:18:57,157 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:18:57,158 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:18:57,161 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:18:57,161 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT playlisttrack.`TrackId` AS `playlisttrack_TrackId`, track.`Name` AS `track_Name`, count(playlisttrack.`PlaylistId`) AS number_of_playlist 
 FROM playlisttrack INNER JOIN track ON playlisttrack.`TrackId` = track.`TrackId` GROUP BY playlisttrack.`TrackId` ORDER BY number_of_playlist DESC, playlisttrack.`TrackId` 
  LIMIT %(param_1)s
-2020-10-29 19:56:49,070 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:56:49,570 -INFO - mservice.aggregate_operation.number_of_playlist_tracks_q8- number_of_playlist_tracks_q8.py - get_number_of_playlist_tracks - 
+2020-10-30 16:18:57,164 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 16:18:57,320 -INFO - mservice.aggregate_operation.number_of_playlist_tracks_q8- number_of_playlist_tracks_q8.py - get_number_of_playlist_tracks - 
 
-The 20 Tracks, Based On Number Of Playlist Is Part Of
-2020-10-29 19:56:49,590 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 19:57:21,370 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 19:57:21,420 -INFO - mservice.aggregate_operation.number_of_playlist_tracks_q8- number_of_playlist_tracks_q8.py - get_number_of_playlist_tracks - Performing Read Operation
-2020-10-29 19:57:21,430 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 19:57:21,430 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:57:21,430 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 19:57:21,430 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:57:21,430 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT playlisttrack.`TrackId` AS `playlisttrack_TrackId`, track.`Name` AS `track_Name`, count(playlisttrack.`PlaylistId`) AS number_of_playlist 
-FROM playlisttrack INNER JOIN track ON playlisttrack.`TrackId` = track.`TrackId` GROUP BY playlisttrack.`TrackId` ORDER BY number_of_playlist DESC, playlisttrack.`TrackId` 
- LIMIT %(param_1)s
-2020-10-29 19:57:21,440 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 19:57:21,470 -INFO - mservice.aggregate_operation.number_of_playlist_tracks_q8- number_of_playlist_tracks_q8.py - get_number_of_playlist_tracks - 
-
-The 20 Tracks, Based On Number Of Playlist It Is Added To
-2020-10-29 19:57:21,490 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:01:53,278 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:01:53,328 -INFO - mservice.aggregate_operation.number_of_playlist_album_q9- number_of_playlist_album_q9.py - get_number_of_playlist_album - Performing Read Operation
-2020-10-29 20:01:53,328 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:01:53,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:01:53,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:01:53,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:01:53,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:01:53,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:01:53,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:01:53,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:01:53,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:01:53,338 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:01:53,348 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:01:53,348 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:01:53,348 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:01:53,348 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:01:53,348 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:01:53,348 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(DISTINCT playlisttrack.`PlaylistId`) AS number_of_playlist 
+The Top 20 Tracks, Based On Number Of Playlist It Is Added To
+2020-10-30 16:18:57,335 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:20:09,682 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:20:09,729 -INFO - mservice.aggregate_operation.number_of_playlist_album_q9- number_of_playlist_album_q9.py - get_number_of_playlist_album - Performing Read Operation
+2020-10-30 16:20:09,729 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:20:09,729 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:20:09,748 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:20:09,749 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:20:09,755 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:20:09,756 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:20:09,756 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:20:09,756 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:20:09,758 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:20:09,758 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:20:09,759 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:20:09,759 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:20:09,760 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:20:09,760 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:20:09,761 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:20:09,762 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT track.`AlbumId` AS `track_AlbumId`, album.`Title` AS `album_Title`, count(DISTINCT playlisttrack.`PlaylistId`) AS number_of_playlist 
 FROM playlisttrack INNER JOIN track ON playlisttrack.`TrackId` = track.`TrackId` INNER JOIN album ON track.`AlbumId` = album.`AlbumId` GROUP BY track.`AlbumId` ORDER BY number_of_playlist DESC, track.`AlbumId` 
  LIMIT %(param_1)s
-2020-10-29 20:01:53,353 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 20:01:53,438 -INFO - mservice.aggregate_operation.number_of_playlist_album_q9- number_of_playlist_album_q9.py - get_number_of_playlist_album - 
+2020-10-30 16:20:09,762 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 16:20:09,808 -INFO - mservice.aggregate_operation.number_of_playlist_album_q9- number_of_playlist_album_q9.py - get_number_of_playlist_album - 
 
 The Top 20 Albums, Based On Number Of Playlist It Is Added To
-2020-10-29 20:01:53,448 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:06:30,126 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:06:30,176 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - Performing Read Operation
-2020-10-29 20:06:30,186 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:06:30,186 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:30,186 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:06:30,186 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:30,186 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:06:30,186 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:30,186 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:06:30,186 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:30,196 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:06:30,196 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:30,196 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:06:30,196 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:30,196 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:06:30,196 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:30,196 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:06:30,196 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DISTINCT track.`Name` AS track_name, genre.`Name` AS genre_name 
+2020-10-30 16:20:09,824 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:21:24,397 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:21:24,450 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - Performing Read Operation
+2020-10-30 16:21:24,461 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:21:24,461 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:21:24,464 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:21:24,465 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:21:24,468 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:21:24,468 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:21:24,469 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:21:24,469 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:21:24,471 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:21:24,472 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:21:24,472 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:21:24,472 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:21:24,473 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:21:24,473 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:21:24,474 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:21:24,475 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DISTINCT track.`Name` AS track_name, genre.`Name` AS genre_name 
 FROM track INNER JOIN genre ON track.`GenreId` = genre.`GenreId` 
 WHERE track.`Name` IN (SELECT track.`Name` 
 FROM track GROUP BY track.`Name` 
 HAVING count(DISTINCT track.`GenreId`) > %(count_1)s) ORDER BY track.`Name` 
  LIMIT %(param_1)s
-2020-10-29 20:06:30,196 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'count_1': 1, 'param_1': 20}
-2020-10-29 20:06:30,306 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - 
-
-20 Tracks, That Are Part Of More Than One Genre
-2020-10-29 20:06:30,306 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:06:42,570 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:06:42,616 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - Performing Read Operation
-2020-10-29 20:06:42,626 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:06:42,626 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:42,626 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:06:42,626 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:42,636 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:06:42,636 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:42,636 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:06:42,636 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:42,641 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:06:42,641 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:42,641 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:06:42,641 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:42,641 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:06:42,641 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:06:42,641 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:06:42,641 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DISTINCT track.`Name` AS track_name, genre.`Name` AS genre_name 
-FROM track INNER JOIN genre ON track.`GenreId` = genre.`GenreId` 
-WHERE track.`Name` IN (SELECT track.`Name` 
-FROM track GROUP BY track.`Name` 
-HAVING count(DISTINCT track.`GenreId`) > %(count_1)s) ORDER BY track.`Name` 
- LIMIT %(param_1)s
-2020-10-29 20:06:42,641 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'count_1': 1, 'param_1': 20}
-2020-10-29 20:06:42,665 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - 
-
-20 Tracks, That Are Part Of More Than One Genre
-2020-10-29 20:06:42,665 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:07:27,045 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:07:27,096 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - Performing Read Operation
-2020-10-29 20:07:27,106 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:07:27,106 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:07:27,106 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:07:27,106 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DISTINCT track.`Name` AS track_name, genre.`Name` AS genre_name 
-FROM track INNER JOIN genre ON track.`GenreId` = genre.`GenreId` 
-WHERE track.`Name` IN (SELECT track.`Name` 
-FROM track GROUP BY track.`Name` 
-HAVING count(DISTINCT track.`GenreId`) > %(count_1)s) ORDER BY track.`Name` 
- LIMIT %(param_1)s
-2020-10-29 20:07:27,115 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'count_1': 1, 'param_1': 21}
-2020-10-29 20:07:27,145 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - 
+2020-10-30 16:21:24,475 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'count_1': 1, 'param_1': 21}
+2020-10-30 16:21:24,503 -INFO - mservice.aggregate_operation.tracks_with_more_genre_q10- tracks_with_more_genre_q10.py - get_tracks_with_more_genre - 
 
 21 Tracks, That Are Part Of More Than One Genre
-2020-10-29 20:07:27,145 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:12:14,313 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:12:14,363 -INFO - mservice.aggregate_operation.top_artist_distinct_genre_q13- top_artist_distinct_genre_q13.py - get_top_artist_genre - Performing Read Operation
-2020-10-29 20:12:14,363 -INFO - mservice.aggregate_operation.top_artist_distinct_genre_q13- top_artist_distinct_genre_q13.py - get_top_artist_genre - 
-
-The top 20 Artist, Based On Number Of Distinct Genre
-2020-10-29 20:12:14,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:12:14,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:14,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:12:14,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:14,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:12:14,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:14,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:12:14,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:14,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:12:14,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:14,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:12:14,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:14,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:12:14,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:14,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:12:14,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT album.`ArtistId` AS `album_ArtistId`, artist.`Name` AS `artist_Name`, count(DISTINCT track.`GenreId`) AS number_of_genre 
+2020-10-30 16:21:24,504 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:22:30,788 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:22:30,835 -INFO - mservice.aggregate_operation.add_genre_to_album_q11- add_genre_to_album_q11.py - add_genre_to_album - Performing Read Operation
+2020-10-30 16:22:30,835 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:22:30,835 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - DESCRIBE `
+                        SELECT DISTINCT
+                            a.title AS album,
+                            g.Name AS genre	  
+                        FROM track t
+                        INNER JOIN album a
+                            ON t.AlbumId = a.AlbumId
+                        INNER JOIN genre g
+                            ON t.GenreId = g.GenreId
+                        -- WHERE t.AlbumId = 102 OR t.AlbumId = 251 
+                        ORDER BY t.AlbumId
+                        LIMIT 20
+                    `
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:22:30,850 -INFO - sqlalchemy.engine.base.Engine- log.py - info - 
+                        SELECT DISTINCT
+                            a.title AS album,
+                            g.Name AS genre	  
+                        FROM track t
+                        INNER JOIN album a
+                            ON t.AlbumId = a.AlbumId
+                        INNER JOIN genre g
+                            ON t.GenreId = g.GenreId
+                        -- WHERE t.AlbumId = 102 OR t.AlbumId = 251 
+                        ORDER BY t.AlbumId
+                        LIMIT 20
+                    
+2020-10-30 16:22:30,866 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:23:33,035 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:23:33,098 -INFO - mservice.aggregate_operation.add_genre_to_artist_q12- add_genre_to_artist_q12.py - add_genre_to_artist - Performing Read Operation
+2020-10-30 16:23:33,098 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:23:33,098 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:23:33,098 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:23:33,098 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - DESCRIBE `
+                        SELECT DISTINCT 
+                            art.Name AS artist ,
+                            g.Name AS genre	   
+                        FROM track t
+                        INNER JOIN genre g
+                            ON t.GenreId = g.GenreId
+                        INNER JOIN album a
+                            ON t.AlbumId = a.AlbumId
+                        INNER JOIN artist art
+                            ON a.ArtistId = art.ArtistId
+                        -- WHERE a.ArtistId = 6 
+                        ORDER BY a.ArtistId
+                        LIMIT 20
+                    `
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:23:33,113 -INFO - sqlalchemy.engine.base.Engine- log.py - info - 
+                        SELECT DISTINCT 
+                            art.Name AS artist ,
+                            g.Name AS genre	   
+                        FROM track t
+                        INNER JOIN genre g
+                            ON t.GenreId = g.GenreId
+                        INNER JOIN album a
+                            ON t.AlbumId = a.AlbumId
+                        INNER JOIN artist art
+                            ON a.ArtistId = art.ArtistId
+                        -- WHERE a.ArtistId = 6 
+                        ORDER BY a.ArtistId
+                        LIMIT 20
+                    
+2020-10-30 16:23:33,129 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:24:36,836 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:24:36,887 -INFO - mservice.aggregate_operation.top_artist_distinct_genre_q13- top_artist_distinct_genre_q13.py - get_top_artist_genre - Performing Read Operation
+2020-10-30 16:24:36,897 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:24:36,897 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT album.`ArtistId` AS `album_ArtistId`, artist.`Name` AS `artist_Name`, count(DISTINCT track.`GenreId`) AS number_of_genre 
 FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` INNER JOIN artist ON album.`ArtistId` = artist.`ArtistId` GROUP BY album.`ArtistId` ORDER BY number_of_genre DESC, album.`ArtistId` 
  LIMIT %(param_1)s
-2020-10-29 20:12:14,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 20:12:14,393 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:12:37,343 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:12:37,393 -INFO - mservice.aggregate_operation.top_artist_distinct_genre_q13- top_artist_distinct_genre_q13.py - get_top_artist_genre - Performing Read Operation
-2020-10-29 20:12:37,393 -INFO - mservice.aggregate_operation.top_artist_distinct_genre_q13- top_artist_distinct_genre_q13.py - get_top_artist_genre - 
+2020-10-30 16:24:36,900 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
+2020-10-30 16:24:36,916 -INFO - mservice.aggregate_operation.top_artist_distinct_genre_q13- top_artist_distinct_genre_q13.py - get_top_artist_genre - 
 
 The top 20 Artist, Based On Number Of Distinct Genre
-2020-10-29 20:12:37,403 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:12:37,403 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:12:37,413 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:12:37,423 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:12:37,423 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT album.`ArtistId` AS `album_ArtistId`, artist.`Name` AS `artist_Name`, count(DISTINCT track.`GenreId`) AS number_of_genre 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` INNER JOIN artist ON album.`ArtistId` = artist.`ArtistId` GROUP BY album.`ArtistId` ORDER BY number_of_genre DESC, album.`ArtistId` 
- LIMIT %(param_1)s
-2020-10-29 20:12:37,423 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 20:12:37,433 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:13:23,312 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:13:23,363 -INFO - mservice.aggregate_operation.top_artist_distinct_genre_q13- top_artist_distinct_genre_q13.py - get_top_artist_genre - Performing Read Operation
-2020-10-29 20:13:23,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:13:23,373 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:13:23,381 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:13:23,383 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:13:23,392 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT album.`ArtistId` AS `album_ArtistId`, artist.`Name` AS `artist_Name`, count(DISTINCT track.`GenreId`) AS number_of_genre 
-FROM track INNER JOIN album ON track.`AlbumId` = album.`AlbumId` INNER JOIN artist ON album.`ArtistId` = artist.`ArtistId` GROUP BY album.`ArtistId` ORDER BY number_of_genre DESC, album.`ArtistId` 
- LIMIT %(param_1)s
-2020-10-29 20:13:23,392 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'param_1': 20}
-2020-10-29 20:13:23,397 -INFO - mservice.aggregate_operation.top_artist_distinct_genre_q13- top_artist_distinct_genre_q13.py - get_top_artist_genre - 
-
-The top 20 Artist, Based On Number Of Distinct Genre
-2020-10-29 20:13:23,402 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:19:29,595 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:19:29,640 -INFO - mservice.aggregate_operation.top_employee_month_q14- top_employee_month_q14.py - get_top_employee_sales - Performing Read Operation
-2020-10-29 20:19:29,655 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:19:29,655 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:19:29,660 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:19:29,660 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:19:29,660 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:19:29,660 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:19:29,660 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:19:29,660 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:19:29,660 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:19:29,660 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:19:29,669 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:19:29,669 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:19:29,669 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:19:29,669 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:19:29,669 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:19:29,669 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT customer.`SupportRepId` AS employee_id, concat(employee.`FirstName`, %(concat_1)s, employee.`LastName`) AS name, count(invoice.`InvoiceId`) AS total_sales 
+2020-10-30 16:24:36,916 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:25:29,712 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:25:29,761 -INFO - mservice.aggregate_operation.top_employee_month_q14- top_employee_month_q14.py - get_top_employee_sales - Performing Read Operation
+2020-10-30 16:25:29,771 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:25:29,772 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:25:29,775 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:25:29,776 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:25:29,779 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:25:29,779 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:25:29,780 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:25:29,780 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:25:29,782 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:25:29,782 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:25:29,783 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:25:29,783 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:25:29,783 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:25:29,784 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:25:29,785 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:25:29,786 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT customer.`SupportRepId` AS employee_id, concat(employee.`FirstName`, %(concat_1)s, employee.`LastName`) AS name, count(invoice.`InvoiceId`) AS total_sales 
 FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` INNER JOIN employee ON customer.`SupportRepId` = employee.`EmployeeId` 
 WHERE EXTRACT(month FROM invoice.`InvoiceDate`) = %(param_1)s AND EXTRACT(year FROM invoice.`InvoiceDate`) = %(param_2)s GROUP BY customer.`SupportRepId` ORDER BY total_sales DESC, customer.`SupportRepId` 
  LIMIT %(param_3)s
-2020-10-29 20:19:29,669 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 20}
-2020-10-29 20:19:30,360 -INFO - mservice.aggregate_operation.top_employee_month_q14- top_employee_month_q14.py - get_top_employee_sales - 
-
-The Top 20 Employee with Most Sales in a Month
-2020-10-29 20:19:30,360 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:20:19,779 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:20:19,914 -INFO - mservice.aggregate_operation.top_employee_month_q14- top_employee_month_q14.py - get_top_employee_sales - Performing Read Operation
-2020-10-29 20:20:19,924 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:20:19,924 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:20:19,929 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:19,939 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:20:19,939 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT customer.`SupportRepId` AS employee_id, concat(employee.`FirstName`, %(concat_1)s, employee.`LastName`) AS name, count(invoice.`InvoiceId`) AS total_sales 
-FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` INNER JOIN employee ON customer.`SupportRepId` = employee.`EmployeeId` 
-WHERE EXTRACT(month FROM invoice.`InvoiceDate`) = %(param_1)s AND EXTRACT(year FROM invoice.`InvoiceDate`) = %(param_2)s GROUP BY customer.`SupportRepId` ORDER BY total_sales DESC, customer.`SupportRepId` 
- LIMIT %(param_3)s
-2020-10-29 20:20:19,939 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 4}
-2020-10-29 20:20:19,939 -INFO - mservice.aggregate_operation.top_employee_month_q14- top_employee_month_q14.py - get_top_employee_sales - 
-
-The Top 4 Employee with Most Sales in a Month
-2020-10-29 20:20:19,947 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:20:56,030 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:20:56,081 -INFO - mservice.aggregate_operation.top_employee_month_q14- top_employee_month_q14.py - get_top_employee_sales - Performing Read Operation
-2020-10-29 20:20:56,089 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:20:56,089 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:56,089 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:20:56,089 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:56,089 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:20:56,089 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:56,089 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:20:56,089 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT customer.`SupportRepId` AS employee_id, concat(employee.`FirstName`, %(concat_1)s, employee.`LastName`) AS name, count(invoice.`InvoiceId`) AS total_sales 
-FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` INNER JOIN employee ON customer.`SupportRepId` = employee.`EmployeeId` 
-WHERE EXTRACT(month FROM invoice.`InvoiceDate`) = %(param_1)s AND EXTRACT(year FROM invoice.`InvoiceDate`) = %(param_2)s GROUP BY customer.`SupportRepId` ORDER BY total_sales DESC, customer.`SupportRepId` 
- LIMIT %(param_3)s
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 4}
-2020-10-29 20:20:56,099 -INFO - mservice.aggregate_operation.top_employee_month_q14- top_employee_month_q14.py - get_top_employee_sales - 
+2020-10-30 16:25:29,787 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 4}
+2020-10-30 16:25:29,823 -INFO - mservice.aggregate_operation.top_employee_month_q14- top_employee_month_q14.py - get_top_employee_sales - 
 
 The Top 4 Employee with Most Sales in Year: 2012 and Month: 08
-2020-10-29 20:20:56,099 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:22:49,638 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:22:49,693 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_revenue - Performing Read Operation
-2020-10-29 20:22:49,718 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_revenue - 
-
-The Top 20 Manager with Most Sales in Year: 2012 and Month: 08
-2020-10-29 20:22:49,728 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:22:49,728 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:22:49,738 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:22:49,748 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT employee_1.`ReportsTo` AS manager_id, concat(employee_2.`FirstName`, %(concat_1)s, employee_2.`LastName`) AS manager_name, sum(invoice.`Total`) AS total_revenue 
+2020-10-30 16:25:29,824 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:26:23,287 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
+2020-10-30 16:26:23,334 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_revenue - Performing Read Operation
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT employee_1.`ReportsTo` AS manager_id, concat(employee_2.`FirstName`, %(concat_1)s, employee_2.`LastName`) AS manager_name, sum(invoice.`Total`) AS total_revenue 
 FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` INNER JOIN employee AS employee_1 ON customer.`SupportRepId` = employee_1.`EmployeeId` INNER JOIN employee AS employee_2 ON employee_1.`ReportsTo` = employee_2.`EmployeeId` 
 WHERE EXTRACT(month FROM invoice.`InvoiceDate`) = %(param_1)s AND EXTRACT(year FROM invoice.`InvoiceDate`) = %(param_2)s GROUP BY manager_id ORDER BY total_revenue DESC 
  LIMIT %(param_3)s
-2020-10-29 20:22:49,748 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 20}
-2020-10-29 20:22:49,758 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:23:02,598 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:23:02,648 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_revenue - Performing Read Operation
-2020-10-29 20:23:02,688 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:23:02,688 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:02,688 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:23:02,688 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:02,688 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:23:02,688 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:02,688 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:23:02,688 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:02,698 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:23:02,698 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:02,698 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:23:02,698 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:02,698 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:23:02,698 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:02,698 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:23:02,698 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT employee_1.`ReportsTo` AS manager_id, concat(employee_2.`FirstName`, %(concat_1)s, employee_2.`LastName`) AS manager_name, sum(invoice.`Total`) AS total_revenue 
-FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` INNER JOIN employee AS employee_1 ON customer.`SupportRepId` = employee_1.`EmployeeId` INNER JOIN employee AS employee_2 ON employee_1.`ReportsTo` = employee_2.`EmployeeId` 
-WHERE EXTRACT(month FROM invoice.`InvoiceDate`) = %(param_1)s AND EXTRACT(year FROM invoice.`InvoiceDate`) = %(param_2)s GROUP BY manager_id ORDER BY total_revenue DESC 
- LIMIT %(param_3)s
-2020-10-29 20:23:02,698 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 20}
-2020-10-29 20:23:02,708 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_revenue - 
-
-The Top 20 Manager with Most Sales in Year: 2012 and Month: 08
-2020-10-29 20:23:02,708 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
-2020-10-29 20:23:22,658 -INFO - mservice.utils.logger- logger.py - configure_logging - Configured Logging
-2020-10-29 20:23:22,708 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_revenue - Performing Read Operation
-2020-10-29 20:23:22,758 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'sql_mode'
-2020-10-29 20:23:22,758 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:22,763 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SHOW VARIABLES LIKE 'lower_case_table_names'
-2020-10-29 20:23:22,763 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:22,768 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT DATABASE()
-2020-10-29 20:23:22,768 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:22,768 -INFO - sqlalchemy.engine.base.Engine- log.py - info - show collation where `Charset` = 'utf8mb4' and `Collation` = 'utf8mb4_bin'
-2020-10-29 20:23:22,768 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:22,768 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test plain returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:23:22,768 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:22,768 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test unicode returns' AS CHAR(60)) AS anon_1
-2020-10-29 20:23:22,768 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:22,773 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT CAST('test collated returns' AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin AS anon_1
-2020-10-29 20:23:22,773 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {}
-2020-10-29 20:23:22,773 -INFO - sqlalchemy.engine.base.Engine- log.py - info - BEGIN (implicit)
-2020-10-29 20:23:22,773 -INFO - sqlalchemy.engine.base.Engine- log.py - info - SELECT employee_1.`ReportsTo` AS manager_id, concat(employee_2.`FirstName`, %(concat_1)s, employee_2.`LastName`) AS manager_name, sum(invoice.`Total`) AS total_revenue 
-FROM invoice INNER JOIN customer ON invoice.`CustomerId` = customer.`CustomerId` INNER JOIN employee AS employee_1 ON customer.`SupportRepId` = employee_1.`EmployeeId` INNER JOIN employee AS employee_2 ON employee_1.`ReportsTo` = employee_2.`EmployeeId` 
-WHERE EXTRACT(month FROM invoice.`InvoiceDate`) = %(param_1)s AND EXTRACT(year FROM invoice.`InvoiceDate`) = %(param_2)s GROUP BY manager_id ORDER BY total_revenue DESC 
- LIMIT %(param_3)s
-2020-10-29 20:23:22,773 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 2}
-2020-10-29 20:23:22,778 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_revenue - 
+2020-10-30 16:26:23,380 -INFO - sqlalchemy.engine.base.Engine- log.py - info - {'concat_1': ' ', 'param_1': 8, 'param_2': 2012, 'param_3': 2}
+2020-10-30 16:26:23,398 -INFO - mservice.aggregate_operation.top_manager_month_q15- top_manager_month_q15.py - get_top_manager_revenue - 
 
 The Top 2 Manager with Most Sales in Year: 2012 and Month: 08
-2020-10-29 20:23:22,778 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK
+2020-10-30 16:26:23,399 -INFO - sqlalchemy.engine.base.Engine- log.py - info - ROLLBACK

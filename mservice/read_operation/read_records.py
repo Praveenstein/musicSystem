@@ -14,51 +14,80 @@ This script contains the following function
 # Standard Imports
 import logging
 
+import sqlalchemy
+from tabulate import tabulate
+
+# External Imports
+from sqlalchemy.orm.exc import NoResultFound
+
 # User Imports
 import mservice.database_model as models
 
 LOGGER = logging.getLogger(__name__)
 
 
-def perform_read_join(session):
+def perform_read_join(session, records):
     """
     Function to perform read operation with the database
 
     :param session: The session to work with
-    :type session: sqlalchemy.orm.session.Session
+    :type session: :class:`sqlalchemy.orm.session.Session`
+
+    :param records: The number of records to return from the query
+    :type records: int
 
     :return: Nothing
     :rtype: None
     """
+    try:
 
-    LOGGER.info("Performing Read Operation")
+        if not issubclass(type(session), sqlalchemy.orm.session.Session):
+            raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
 
-    # Selecting the Invoice Id, Customer Id, Invoice Date, Invoice Total, Customer Name, Employee Name,
-    # Employee Title, Track Name
-    query = session.query(models.InvoiceTable.invoice_id, models.InvoiceTable.customer_id,
-                          models.InvoiceTable.invoice_date, models.InvoiceTable.total, models.CustomerTable.first_name,
-                          models.EmployeeTable.first_name.label("Employee_Name"), models.EmployeeTable.title,
-                          models.TracksTable.name)
+        if not issubclass(type(records), int) or records < 1:
+            raise AttributeError("number of records should be integer and greater than 0")
 
-    # Joining Invoice Table, Customer Table, Invoice Line, Employee, Tracks Table
-    query = query.join(models.CustomerTable, models.InvoiceTable.customer_id == models.CustomerTable.customer_id)
-    query = query.join(models.InvoiceLineTable, models.InvoiceTable.invoice_id == models.InvoiceLineTable.invoice_id)
-    query = query.join(models.EmployeeTable, models.CustomerTable.support_rep_id == models.EmployeeTable.employee_id)
-    query = query.join(models.TracksTable, models.InvoiceLineTable.track_id == models.TracksTable.track_id)
+        LOGGER.info("Performing Read Operation")
 
-    # Sorting by Invoice Id
-    query = query.order_by(models.InvoiceTable.invoice_id)
+        # Selecting the Invoice Id, Customer Id, Invoice Date, Invoice Total, Customer Name, Employee Name,
+        # Employee Title, Track Name
+        query = session.query(models.InvoiceTable.invoice_id, models.InvoiceTable.customer_id,
+                              models.InvoiceTable.invoice_date, models.InvoiceTable.total,
+                              models.CustomerTable.first_name,
+                              models.EmployeeTable.first_name.label("Employee_Name"), models.EmployeeTable.title,
+                              models.TracksTable.name)
 
-    results = query.limit(20)
+        # Joining Invoice Table, Customer Table, Invoice Line, Employee, Tracks Table
+        query = query.join(models.CustomerTable, models.InvoiceTable.customer_id == models.CustomerTable.customer_id)
+        query = query.join(models.InvoiceLineTable,
+                           models.InvoiceTable.invoice_id == models.InvoiceLineTable.invoice_id)
+        query = query.join(models.EmployeeTable,
+                           models.CustomerTable.support_rep_id == models.EmployeeTable.employee_id)
+        query = query.join(models.TracksTable, models.InvoiceLineTable.track_id == models.TracksTable.track_id)
 
-    print("\n\n")
-    print("==" * 50)
+        # Sorting by Invoice Id
+        query = query.order_by(models.InvoiceTable.invoice_id)
 
-    for result in results:
-        print(f"{result.invoice_id}, {result.customer_id}, {result.invoice_date}, {result.total}, {result.first_name},"
-              f"{result.Employee_Name}, {result.name}, {result.title}")
+        results = query.limit(records).all()
 
-    print("\n\n")
-    print("==" * 50)
+        if not results:
+            raise NoResultFound("No Records Found")
 
-    session.close()
+        LOGGER.info("\n\nThe %s Invoice Records Are", records)
+
+        print("\n\n")
+        print("====" * 50)
+        print("\n\n")
+
+        print(tabulate(results, headers=["Invoice ID", "Customer ID", "Invoice Date", "Invoice Total", "Customer Name",
+                                         "Support Rep Name", "Support Rep Title", "Track"], tablefmt="grid"))
+
+        print("\n\n")
+        print("====" * 50)
+        print("\n\n")
+    except AttributeError as err:
+        LOGGER.error(err)
+    except NoResultFound as err:
+        LOGGER.error(err)
+    finally:
+        session.close()

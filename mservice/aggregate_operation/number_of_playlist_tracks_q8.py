@@ -18,6 +18,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import desc, func
+from sqlalchemy.orm.exc import NoResultFound
 from tabulate import tabulate
 
 # User Imports
@@ -39,40 +40,47 @@ def get_number_of_playlist_tracks(session, number_of_tracks):
     :return: Nothing
     :rtype: None
     """
+    try:
+        if not issubclass(type(session), sqlalchemy.orm.session.Session):
+            raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
 
-    if not issubclass(type(session), sqlalchemy.orm.session.Session):
-        raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
+        if not issubclass(type(number_of_tracks), int) or number_of_tracks < 1:
+            raise AttributeError("number of tracks should be integer and greater than 0")
 
-    if not issubclass(type(number_of_tracks), int) or number_of_tracks < 1:
-        raise AttributeError("number of tracks should be integer and greater than 0")
+        LOGGER.info("Performing Read Operation")
 
-    LOGGER.info("Performing Read Operation")
+        # Selecting the Track Id, Track Name, and Count of playlist IDs
+        query = session.query(models.PlaylistTrackTable.track_id, models.TracksTable.name,
+                              func.count(models.PlaylistTrackTable.play_list_id).label("number_of_playlist"))
 
-    # Selecting the Track Id, Track Name, and Count of playlist IDs
-    query = session.query(models.PlaylistTrackTable.track_id, models.TracksTable.name,
-                          func.count(models.PlaylistTrackTable.play_list_id).label("number_of_playlist"))
+        # Joining tracks table and playlisttrack table
+        query = query.join(models.TracksTable, models.PlaylistTrackTable.track_id == models.TracksTable.track_id)
 
-    # Joining tracks table and playlisttrack table
-    query = query.join(models.TracksTable, models.PlaylistTrackTable.track_id == models.TracksTable.track_id)
+        # Grouping by Track Id
+        query = query.group_by(models.PlaylistTrackTable.track_id)
 
-    # Grouping by Track Id
-    query = query.group_by(models.PlaylistTrackTable.track_id)
+        # Sorting by number_of_playlist and track id
+        query = query.order_by(desc("number_of_playlist"), models.PlaylistTrackTable.track_id)
 
-    # Sorting by number_of_playlist and track id
-    query = query.order_by(desc("number_of_playlist"), models.PlaylistTrackTable.track_id)
+        results = query.limit(number_of_tracks).all()
 
-    results = query.limit(number_of_tracks).all()
+        if not results:
+            raise NoResultFound("No Records Found")
 
-    LOGGER.info("\n\nThe Top %s Tracks, Based On Number Of Playlist It Is Added To", number_of_tracks)
+        LOGGER.info("\n\nThe Top %s Tracks, Based On Number Of Playlist It Is Added To", number_of_tracks)
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
 
-    print(tabulate(results, headers=["Track ID", "Track Name", "Number Of Playlist"], tablefmt="grid"))
+        print(tabulate(results, headers=["Track ID", "Track Name", "Number Of Playlist"], tablefmt="grid"))
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
-
-    session.close()
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
+    except AttributeError as err:
+        LOGGER.error(err)
+    except NoResultFound as err:
+        LOGGER.error(err)
+    finally:
+        session.close()

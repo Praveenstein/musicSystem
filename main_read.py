@@ -15,6 +15,9 @@ This script contains the following function
 # Standard imports
 import logging
 
+# External Imports
+from sqlalchemy.orm.exc import NoResultFound
+
 # User Imports
 import mservice.utils as helper
 import mservice.connections as connections
@@ -44,7 +47,7 @@ def main():
     session_factory = connections.get_session_factory(engine)
     session = session_factory()
 
-    db_read.perform_read_join(session)
+    db_read.perform_read_join(session, helper.ARGUMENTS.number)
 
 
 if __name__ == '__main__':

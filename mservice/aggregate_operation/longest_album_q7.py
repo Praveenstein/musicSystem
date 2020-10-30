@@ -17,6 +17,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import desc, func
+from sqlalchemy.orm.exc import NoResultFound
 from tabulate import tabulate
 
 # User Imports
@@ -38,40 +39,47 @@ def get_longest_album(session, number_of_albums):
     :return: Nothing
     :rtype: None
     """
+    try:
+        if not issubclass(type(session), sqlalchemy.orm.session.Session):
+            raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
 
-    if not issubclass(type(session), sqlalchemy.orm.session.Session):
-        raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
+        if not issubclass(type(number_of_albums), int) or number_of_albums < 1:
+            raise AttributeError("number of albums should be integer and greater than 0")
 
-    if not issubclass(type(number_of_albums), int) or number_of_albums < 1:
-        raise AttributeError("number of albums should be integer and greater than 0")
+        LOGGER.info("Performing Read Operation")
 
-    LOGGER.info("Performing Read Operation")
+        # Selecting the Album id, Album Title, and sum of playtime
+        query = session.query(models.TracksTable.album_id, models.AlbumTable.title,
+                              func.sum(models.TracksTable.milliseconds).label("total_playtime"))
 
-    # Selecting the Album id, Album Title, and sum of playtime
-    query = session.query(models.TracksTable.album_id, models.AlbumTable.title,
-                          func.sum(models.TracksTable.milliseconds).label("total_playtime"))
+        # Joining tracks table and album table
+        query = query.join(models.AlbumTable, models.TracksTable.album_id == models.AlbumTable.album_id)
 
-    # Joining tracks table and album table
-    query = query.join(models.AlbumTable, models.TracksTable.album_id == models.AlbumTable.album_id)
+        # Grouping by Album Id
+        query = query.group_by(models.TracksTable.album_id)
 
-    # Grouping by Album Id
-    query = query.group_by(models.TracksTable.album_id)
+        # Sorting by milliseconds and track id
+        query = query.order_by(desc("total_playtime"), models.TracksTable.album_id)
 
-    # Sorting by milliseconds and track id
-    query = query.order_by(desc("total_playtime"), models.TracksTable.album_id)
+        results = query.limit(number_of_albums).all()
 
-    results = query.limit(number_of_albums).all()
+        if not results:
+            raise NoResultFound("No Records Found")
 
-    LOGGER.info("\n\nThe %s Longest Albums Based On Playtime Of Its Tracks", number_of_albums)
+        LOGGER.info("\n\nThe %s Longest Albums Based On Playtime Of Its Tracks", number_of_albums)
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
 
-    print(tabulate(results, headers=["Album ID", "Album Title", "Total PlayTime (Milli Seconds)"], tablefmt="grid"))
+        print(tabulate(results, headers=["Album ID", "Album Title", "Total PlayTime (Milli Seconds)"], tablefmt="grid"))
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
-
-    session.close()
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
+    except AttributeError as err:
+        LOGGER.error(err)
+    except NoResultFound as err:
+        LOGGER.error(err)
+    finally:
+        session.close()

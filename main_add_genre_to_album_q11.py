@@ -37,15 +37,12 @@ def main():
     # Configuring logging
     helper.configure_logging(log_config_file)
 
-    try:
-        # Getting a new engine
-        engine = connections.create_new_engine(helper.ARGUMENTS.dialect, helper.ARGUMENTS.driver,
-                                               helper.ARGUMENTS.user, helper.ARGUMENTS.password,
-                                               helper.ARGUMENTS.host, helper.ARGUMENTS.database)
+    # Getting a new engine
+    engine = connections.create_new_engine(helper.ARGUMENTS.dialect, helper.ARGUMENTS.driver,
+                                           helper.ARGUMENTS.user, helper.ARGUMENTS.password,
+                                           helper.ARGUMENTS.host, helper.ARGUMENTS.database)
 
-        db_aggregate.add_genre_to_album(engine, helper.ARGUMENTS.number)
-    except AttributeError as err:
-        LOGGER.error(err)
+    db_aggregate.add_genre_to_album(engine, helper.ARGUMENTS.number)
 
 
 if __name__ == '__main__':

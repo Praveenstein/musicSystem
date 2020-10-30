@@ -18,6 +18,7 @@ import logging
 # External imports
 import sqlalchemy.orm
 from sqlalchemy import desc, func, extract
+from sqlalchemy.orm.exc import NoResultFound
 from tabulate import tabulate
 
 # User Imports
@@ -39,46 +40,53 @@ def get_top_employee_sales(session, number_of_employee):
     :return: Nothing
     :rtype: None
     """
+    try:
+        if not issubclass(type(session), sqlalchemy.orm.session.Session):
+            raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
 
-    if not issubclass(type(session), sqlalchemy.orm.session.Session):
-        raise AttributeError("session not passed correctly, should be of type 'sqlalchemy.orm.session.Session' ")
+        if not issubclass(type(number_of_employee), int) or number_of_employee < 1:
+            raise AttributeError("number of Employee should be integer and greater than 0")
 
-    if not issubclass(type(number_of_employee), int) or number_of_employee < 1:
-        raise AttributeError("number of Employee should be integer and greater than 0")
+        LOGGER.info("Performing Read Operation")
 
-    LOGGER.info("Performing Read Operation")
+        # Selecting the Employee Id, Employee Name, and Total Sales
+        query = session.query(models.CustomerTable.support_rep_id.label("employee_id"),
+                              func.concat(models.EmployeeTable.first_name, " ", models.EmployeeTable.last_name).
+                              label("name"), func.count(models.InvoiceTable.invoice_id).label("total_sales"))
 
-    # Selecting the Employee Id, Employee Name, and Total Sales
-    query = session.query(models.CustomerTable.support_rep_id.label("employee_id"),
-                          func.concat(models.EmployeeTable.first_name, " ", models.EmployeeTable.last_name).
-                          label("name"), func.count(models.InvoiceTable.invoice_id).label("total_sales"))
+        # Joining Invoice, customer and employee Table
+        query = query.join(models.CustomerTable, models.InvoiceTable.customer_id == models.CustomerTable.customer_id)
+        query = query.join(models.EmployeeTable, models.CustomerTable.support_rep_id == models.EmployeeTable.employee_id)
 
-    # Joining Invoice, customer and employee Table
-    query = query.join(models.CustomerTable, models.InvoiceTable.customer_id == models.CustomerTable.customer_id)
-    query = query.join(models.EmployeeTable, models.CustomerTable.support_rep_id == models.EmployeeTable.employee_id)
+        # Filtering the result For given year and month
+        query = query.filter(extract('month', models.InvoiceTable.invoice_date) == 8,
+                             extract('year', models.InvoiceTable.invoice_date) == 2012)
 
-    # Filtering the result For given year and month
-    query = query.filter(extract('month', models.InvoiceTable.invoice_date) == 8,
-                         extract('year', models.InvoiceTable.invoice_date) == 2012)
+        # Grouping by Employee Id
+        query = query.group_by(models.CustomerTable.support_rep_id)
 
-    # Grouping by Employee Id
-    query = query.group_by(models.CustomerTable.support_rep_id)
+        # Sorting by total_sales and employee id
+        query = query.order_by(desc("total_sales"), models.CustomerTable.support_rep_id)
 
-    # Sorting by total_sales and employee id
-    query = query.order_by(desc("total_sales"), models.CustomerTable.support_rep_id)
+        results = query.limit(number_of_employee).all()
 
-    results = query.limit(number_of_employee).all()
+        if not results:
+            raise NoResultFound("No Records Found")
 
-    LOGGER.info("\n\nThe Top %s Employee with Most Sales in Year: 2012 and Month: 08", number_of_employee)
+        LOGGER.info("\n\nThe Top %s Employee with Most Sales in Year: 2012 and Month: 08", number_of_employee)
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
 
-    print(tabulate(results, headers=["Employee ID", "Employee Name", "Total Sales"], tablefmt="grid"))
+        print(tabulate(results, headers=["Employee ID", "Employee Name", "Total Sales"], tablefmt="grid"))
 
-    print("\n\n")
-    print("===" * 50)
-    print("\n\n")
-
-    session.close()
+        print("\n\n")
+        print("===" * 50)
+        print("\n\n")
+    except AttributeError as err:
+        LOGGER.error(err)
+    except NoResultFound as err:
+        LOGGER.error(err)
+    finally:
+        session.close()

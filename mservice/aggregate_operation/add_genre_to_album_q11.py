@@ -34,36 +34,38 @@ def add_genre_to_album(engine, number_of_albums):
     :return: Nothing
     :rtype: None
     """
+    try:
+        if not issubclass(type(engine), sqlalchemy.engine.base.Engine):
+            raise AttributeError("Engine not passed correctly, should be of type 'sqlalchemy.engine.base.Engine' ")
 
-    if not issubclass(type(engine), sqlalchemy.engine.base.Engine):
-        raise AttributeError("Engine not passed correctly, should be of type 'sqlalchemy.engine.base.Engine' ")
+        if not issubclass(type(number_of_albums), int) or number_of_albums < 1:
+            raise AttributeError("number of albums should be integer and greater than 0")
 
-    if not issubclass(type(number_of_albums), int) or number_of_albums < 1:
-        raise AttributeError("number of albums should be integer and greater than 0")
+        LOGGER.info("Performing Read Operation")
 
-    LOGGER.info("Performing Read Operation")
+        sql_stmt = f"""
+                        SELECT DISTINCT
+                            a.title AS album,
+                            g.Name AS genre	  
+                        FROM track t
+                        INNER JOIN album a
+                            ON t.AlbumId = a.AlbumId
+                        INNER JOIN genre g
+                            ON t.GenreId = g.GenreId
+                        -- WHERE t.AlbumId = 102 OR t.AlbumId = 251 
+                        ORDER BY t.AlbumId
+                        LIMIT {number_of_albums}
+                    """
 
-    sql_stmt = f"""
-                    SELECT DISTINCT
-                        a.title AS album,
-                        g.Name AS genre	  
-                    FROM track t
-                    INNER JOIN album a
-                        ON t.AlbumId = a.AlbumId
-                    INNER JOIN genre g
-                        ON t.GenreId = g.GenreId
-                    -- WHERE t.AlbumId = 102 OR t.AlbumId = 251 
-                    ORDER BY t.AlbumId
-                    LIMIT {number_of_albums}
-                """
+        with engine.connect() as connection:
+            albums_df = pd.read_sql(sql_stmt, connection)
 
-    with engine.connect() as connection:
-        albums_df = pd.read_sql(sql_stmt, connection)
+        print("\n\n")
+        print("==" * 50)
 
-    print("\n\n")
-    print("==" * 50)
+        print(albums_df)
 
-    print(albums_df)
-
-    print("\n\n")
-    print("==" * 50)
+        print("\n\n")
+        print("==" * 50)
+    except AttributeError as err:
+        LOGGER.error(err)

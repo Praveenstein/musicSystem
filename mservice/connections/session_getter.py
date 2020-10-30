@@ -6,11 +6,15 @@ environment you are running this script in.
 
     * sqlalchemy - Package used to connect to a database and do SQL operations using orm_queries
 """
+# Standard Imports
+import logging
 
 # External Imports
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+LOGGER = logging.getLogger(__name__)
 
 
 def create_new_engine(dialect, driver, user, password, host, database):
@@ -38,16 +42,20 @@ def create_new_engine(dialect, driver, user, password, host, database):
     :return: New engine configured with given parameters
     :rtype: :class:`sqlalchemy.engine.create_engine`
     """
+    try:
 
-    if not all(map(lambda arg: True if issubclass(type(arg), str) else False, [dialect, driver, user, password,
-                                                                               host, database])):
-        raise AttributeError("Invalid attribute type, should be string")
+        if not all(map(lambda arg: True if issubclass(type(arg), str) else False, [dialect, driver, user, password,
+                                                                                   host, database])):
+            raise AttributeError("Invalid attribute type, should be string")
 
-    connection_string = dialect + "+" + driver + "://" + user + ":" + password + "@" + host + "/" + database + \
-                        "?charset=utf8mb4"
+        connection_string = dialect + "+" + driver + "://" + user + ":" + password + "@" + host + "/" + database + \
+                            "?charset=utf8mb4"
 
-    engine = create_engine(connection_string, echo=True)
-    return engine
+        engine = create_engine(connection_string, echo=True)
+        return engine
+    except AttributeError as err:
+        LOGGER.error(err)
+        raise
 
 
 def get_session_factory(engine):
@@ -57,8 +65,12 @@ def get_session_factory(engine):
     :return: sessionmaker
     :rtype: :class:sqlalchemy.orm.sessionmaker
     """
-    if not issubclass(type(engine), sqlalchemy.engine.base.Engine):
-        raise AttributeError("Engine should be of type 'sqlalchemy.engine.base.Engine'")
+    try:
+        if not issubclass(type(engine), sqlalchemy.engine.base.Engine):
+            raise AttributeError("Engine should be of type 'sqlalchemy.engine.base.Engine'")
 
-    session_factory = sessionmaker(bind=engine)
-    return session_factory
+        session_factory = sessionmaker(bind=engine)
+        return session_factory
+    except AttributeError as err:
+        LOGGER.error(err)
+        raise

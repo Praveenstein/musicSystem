@@ -25,8 +25,12 @@ def configure_logging(filepath):
 
     :return: None
     """
-    with open(filepath, 'r') as file_object:
-        config_data = json.load(file_object)
+    try:
+        with open(filepath, 'r') as file_object:
+            config_data = json.load(file_object)
+    except FileNotFoundError as err:
+        LOGGER.error(err)
+        raise
 
     logging.config.dictConfig(config_data)
 
