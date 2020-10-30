@@ -73,7 +73,8 @@ def get_top_artist_tracks(session, number_of_artist):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Artist ID", "Artist Name", "Number Of Tracks"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Artist ID", "Artist Name", "Number Of Tracks"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

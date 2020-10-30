@@ -79,8 +79,9 @@ def perform_read_join(session, records):
         print("====" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Invoice ID", "Customer ID", "Invoice Date", "Invoice Total", "Customer Name",
-                                         "Support Rep Name", "Support Rep Title", "Track"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Invoice ID", "Customer ID", "Invoice Date", "Invoice Total",
+                                                          "Customer Name", "Support Rep Name", "Support Rep Title",
+                                                          "Track"], tablefmt="grid"))
 
         print("\n\n")
         print("====" * 50)

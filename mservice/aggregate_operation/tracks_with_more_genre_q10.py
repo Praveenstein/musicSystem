@@ -79,7 +79,7 @@ def get_tracks_with_more_genre(session, number_of_tracks):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Track Name", "Genre Name"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Track Name", "Genre Name"], tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

@@ -65,7 +65,7 @@ def add_genre_to_artist(engine, number_of_artist):
         print("\n\n")
         print("==" * 50)
 
-        print(artists_df)
+        LOGGER.info("\n\n %s", artists_df)
 
         print("\n\n")
         print("==" * 50)

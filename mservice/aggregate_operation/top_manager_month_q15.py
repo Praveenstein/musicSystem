@@ -87,7 +87,8 @@ def get_top_manager_revenue(session, number_of_manager):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Manager ID", "Manager Name", "Total Revenue"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Manager ID", "Manager Name", "Total Revenue"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

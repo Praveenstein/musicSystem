@@ -50,7 +50,7 @@ def get_longest_album(session, number_of_albums):
 
         # Selecting the Album id, Album Title, and sum of playtime
         query = session.query(models.TracksTable.album_id, models.AlbumTable.title,
-                              func.sum(models.TracksTable.milliseconds).label("total_playtime"))
+                              (func.sum(models.TracksTable.milliseconds)/1000).label("total_playtime"))
 
         # Joining tracks table and album table
         query = query.join(models.AlbumTable, models.TracksTable.album_id == models.AlbumTable.album_id)
@@ -72,7 +72,8 @@ def get_longest_album(session, number_of_albums):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Album ID", "Album Title", "Total PlayTime (Milli Seconds)"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Album ID", "Album Title", "Total PlayTime (Seconds)"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

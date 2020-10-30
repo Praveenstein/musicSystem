@@ -65,7 +65,8 @@ def get_longest_tracks(session, number_of_tracks):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Track ID", "Track Name", "PlayTime (Milli Seconds)"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Track ID", "Track Name", "PlayTime (Milli Seconds)"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

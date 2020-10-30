@@ -73,7 +73,8 @@ def get_top_customers(session, number_of_customers):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Customer ID", " Customer Name", "Total Amount"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Customer ID", " Customer Name", "Total Amount"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

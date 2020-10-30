@@ -72,7 +72,8 @@ def get_top_album_tracks(session, number_of_albums):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Album ID", "Title", "Number Of Tracks"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Album ID", "Title", "Number Of Tracks"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

@@ -90,8 +90,8 @@ def get_top_tracks_for_genre(session, number_of_tracks):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Track ID", "Track Name", "Genre ID", "Genre Name", "Number Of Purchases"],
-                       tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Track ID", "Track Name", "Genre ID", "Genre Name",
+                                                          "Number Of Purchases"], tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

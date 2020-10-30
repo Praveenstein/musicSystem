@@ -63,7 +63,7 @@ def add_genre_to_album(engine, number_of_albums):
         print("\n\n")
         print("==" * 50)
 
-        print(albums_df)
+        LOGGER.info("\n\n %s", albums_df)
 
         print("\n\n")
         print("==" * 50)

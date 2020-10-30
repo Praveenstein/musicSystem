@@ -74,7 +74,8 @@ def get_top_artist_genre(session, number_of_artist):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Artist ID", "Artist Name", "Number Of Genre"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Artist ID", "Artist Name", "Number Of Genre"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

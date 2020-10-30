@@ -74,7 +74,8 @@ def get_top_album_purchases(session, number_of_albums):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Album ID", " Album Title", "Number Of Purchases"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Album ID", " Album Title", "Number Of Purchases"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

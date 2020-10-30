@@ -74,7 +74,8 @@ def get_number_of_playlist_album(session, number_of_albums):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Album ID", "Album Title", "Number Of Playlist"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Album ID", "Album Title", "Number Of Playlist"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

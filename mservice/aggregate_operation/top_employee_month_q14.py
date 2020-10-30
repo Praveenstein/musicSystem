@@ -79,7 +79,8 @@ def get_top_employee_sales(session, number_of_employee):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Employee ID", "Employee Name", "Total Sales"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Employee ID", "Employee Name", "Total Sales"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)

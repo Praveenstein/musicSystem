@@ -73,7 +73,8 @@ def get_number_of_playlist_tracks(session, number_of_tracks):
         print("===" * 50)
         print("\n\n")
 
-        print(tabulate(results, headers=["Track ID", "Track Name", "Number Of Playlist"], tablefmt="grid"))
+        LOGGER.info("\n\n %s", tabulate(results, headers=["Track ID", "Track Name", "Number Of Playlist"],
+                                        tablefmt="grid"))
 
         print("\n\n")
         print("===" * 50)
